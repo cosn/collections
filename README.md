@@ -24,6 +24,6 @@ go test github.com/cosn/collections...
 - Queue
 - Set (TODO)
 - Binary Search Tree (TODO)
-- Ternary Tree (TODO)
+- Ternary Search Tree (TODO)
 - Trie (TODO)
 - B-Tree (TODO)
