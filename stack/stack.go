@@ -7,10 +7,10 @@ type stack struct {
 	i       int
 }
 
-// New returns an initialized stack
-func New() (s *stack) {
+// New returns an initialized stack of a given size
+func New(size int) (s *stack) {
 	s = new(stack)
-	s.storage = make([]interface{}, 256)
+	s.storage = make([]interface{}, size)
 	s.i = -1
 
 	return
@@ -19,7 +19,6 @@ func New() (s *stack) {
 // Push adds a new element to the top of the stack
 // O(1)
 func (s *stack) Push(v interface{}) {
-
 	// dynamically increase the size of storage as needed
 	if s.i+1 == cap(s.storage) {
 		ns := make([]interface{}, s.i*2)

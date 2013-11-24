@@ -20,10 +20,11 @@ go test github.com/cosn/collections...
 
 ## Included structures
 
-- Stack
+- B-Tree (TODO)
+- Binary Search Tree (TODO)
 - Queue
 - Set (TODO)
-- Binary Search Tree (TODO)
+- Sorted Set (TODO)
+- Stack
 - Ternary Search Tree (TODO)
 - Trie (TODO)
-- B-Tree (TODO)

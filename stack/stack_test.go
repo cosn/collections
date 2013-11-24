@@ -5,7 +5,7 @@ import "testing"
 const iterations = 1000
 
 func TestPushPop(t *testing.T) {
-	s := New()
+	s := New(iterations / 2)
 
 	for i := 0; i < iterations; i++ {
 		s.Push(i)
@@ -17,7 +17,7 @@ func TestPushPop(t *testing.T) {
 }
 
 func TestPeek(t *testing.T) {
-	s := New()
+	s := New(10)
 
 	s.Push("a")
 	testPeek(t, s, "a")
@@ -33,7 +33,7 @@ func TestPeek(t *testing.T) {
 }
 
 func TestLen(t *testing.T) {
-	s := New()
+	s := New(iterations / 4)
 
 	for i := 0; i < iterations; i++ {
 		s.Push(i)
@@ -50,7 +50,7 @@ func TestLen(t *testing.T) {
 }
 
 func TestIsEmpty(t *testing.T) {
-	s := New()
+	s := New(2)
 
 	if s.IsEmpty() != true {
 		t.Errorf("Stack should be empty")
