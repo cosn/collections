@@ -8,12 +8,12 @@ type stack struct {
 }
 
 // New returns an initialized stack of a given size
-func New(size int) (s *stack) {
-	s = new(stack)
+func New(size int) *stack {
+	s := new(stack)
 	s.storage = make([]interface{}, size)
 	s.i = -1
 
-	return
+	return s
 }
 
 // Push adds a new element to the top of the stack

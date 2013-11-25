@@ -9,10 +9,10 @@ type queue struct {
 }
 
 // New returns an initialized queue
-func New() (s *queue) {
-	s = new(queue)
-	s.l = list.New()
-	return
+func New() *queue {
+	q := new(queue)
+	q.l = list.New()
+	return q
 }
 
 // Push enqueues an element to the queue
