@@ -38,6 +38,7 @@ func (s *stack) Pop() interface{} {
 	}
 
 	v := s.storage[s.i]
+	s.storage[s.i] = nil
 	s.i--
 
 	return v
