@@ -211,7 +211,7 @@ func TestIsProperSubset(t *testing.T) {
 	}
 }
 
-func TestEqual(t *testing.T) {
+func TestEquals(t *testing.T) {
 	s1, s2 := new(Set), new(Set)
 	s1.Init()
 	s2.Init()
@@ -224,22 +224,22 @@ func TestEqual(t *testing.T) {
 	s2.Add("b")
 	s2.Add("c")
 
-	if !s1.Equal(s2) {
+	if !s1.Equals(s2) {
 		t.Errorf("S1 is not equal to S2\n")
 	}
 
 	s2.Add("d")
-	if s1.Equal(s2) {
+	if s1.Equals(s2) {
 		t.Errorf("S1 should not be equal to S2\n")
 	}
 
 	s1.Add("d")
 	s1.Add("e")
-	if s1.Equal(s2) {
+	if s1.Equals(s2) {
 		t.Errorf("S1 should not be equal to S2\n")
 	}
 
-	if s1.Equal(nil) {
+	if s1.Equals(nil) {
 		t.Errorf("The set should not equal the empty set\n")
 	}
 }

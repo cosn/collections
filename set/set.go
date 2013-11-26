@@ -133,7 +133,7 @@ func (s *Set) IsProperSubset(t *Set) bool {
 
 // Equal returns true if the two sets contain the same elements
 // O(n)
-func (s *Set) Equal(t *Set) bool {
+func (s *Set) Equals(t *Set) bool {
 	if t == nil || s.Len() != t.Len() {
 		return false
 	}
