@@ -5,7 +5,8 @@ import "testing"
 const iterations = 1000
 
 func TestPushPop(t *testing.T) {
-	q := New()
+	q := new(Queue)
+	q.Init()
 
 	for i := 0; i < iterations; i++ {
 		q.Push(i)
@@ -17,7 +18,8 @@ func TestPushPop(t *testing.T) {
 }
 
 func TestLen(t *testing.T) {
-	q := New()
+	q := new(Queue)
+	q.Init()
 
 	for i := 0; i < iterations; i++ {
 		q.Push(i)
@@ -34,7 +36,8 @@ func TestLen(t *testing.T) {
 }
 
 func TestIsEmpty(t *testing.T) {
-	q := New()
+	q := new(Queue)
+	q.Init()
 
 	if q.IsEmpty() != true {
 		t.Errorf("Queue should be empty")
@@ -47,7 +50,7 @@ func TestIsEmpty(t *testing.T) {
 	}
 }
 
-func testPop(t *testing.T, q *queue, e interface{}) {
+func testPop(t *testing.T, q *Queue, e interface{}) {
 	if v := q.Pop(); v != e {
 		t.Errorf("Popping expected %v, got %v", e, v)
 	}

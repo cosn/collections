@@ -5,7 +5,8 @@ import "testing"
 const iterations = 1024
 
 func TestPushPop(t *testing.T) {
-	s := New(iterations / 2)
+	s := new(Stack)
+	s.Init(iterations / 2)
 
 	for i := 0; i < iterations; i++ {
 		s.Push(i)
@@ -17,7 +18,8 @@ func TestPushPop(t *testing.T) {
 }
 
 func TestPeek(t *testing.T) {
-	s := New(10)
+	s := new(Stack)
+	s.Init(10)
 
 	s.Push("a")
 	testPeek(t, s, "a")
@@ -33,7 +35,8 @@ func TestPeek(t *testing.T) {
 }
 
 func TestLen(t *testing.T) {
-	s := New(iterations / 4)
+	s := new(Stack)
+	s.Init(iterations / 4)
 
 	for i := 0; i < iterations; i++ {
 		s.Push(i)
@@ -50,7 +53,8 @@ func TestLen(t *testing.T) {
 }
 
 func TestIsEmpty(t *testing.T) {
-	s := New(2)
+	s := new(Stack)
+	s.Init(2)
 
 	if s.IsEmpty() != true {
 		t.Errorf("Stack should be empty")
@@ -63,13 +67,13 @@ func TestIsEmpty(t *testing.T) {
 	}
 }
 
-func testPop(t *testing.T, s *stack, e interface{}) {
+func testPop(t *testing.T, s *Stack, e interface{}) {
 	if v := s.Pop(); v != e {
 		t.Errorf("Popping expected %v, got %v", e, v)
 	}
 }
 
-func testPeek(t *testing.T, s *stack, e interface{}) {
+func testPeek(t *testing.T, s *Stack, e interface{}) {
 	if v := s.Peek(); v != e {
 		t.Errorf("Peeking expected %v, got %v", e, v)
 	}
