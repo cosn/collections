@@ -8,7 +8,7 @@ func TestAddRemoveContainsClear(t *testing.T) {
 
 	testLen(t, s.Len(), 0)
 	if !s.IsEmpty() {
-		t.Errorf("Set should be empty, but it doesn't seem to be")
+		t.Errorf("Set should be empty, but it doesn't seem to be\n")
 	}
 
 	s.Add("a")
@@ -19,7 +19,7 @@ func TestAddRemoveContainsClear(t *testing.T) {
 
 	// duplicate value should not be added
 	if s.Add("a") {
-		t.Errorf("'a' already exited in the set, so it should not be added again")
+		t.Errorf("'a' already exited in the set, so it should not be added again\n")
 	}
 	testLen(t, s.Len(), 1)
 
@@ -46,7 +46,7 @@ func TestAddRemoveContainsClear(t *testing.T) {
 	}
 
 	if s.Remove("b") {
-		t.Errorf("'b' doesn't exist, so it should not be removed again")
+		t.Errorf("'b' doesn't exist, so it should not be removed again\n")
 	}
 
 	s.Clear()
@@ -76,7 +76,7 @@ func TestUnion(t *testing.T) {
 
 	ns := s1.Union(nil)
 	if ns != s1 {
-		t.Errorf("Union with null set should be the set")
+		t.Errorf("Union with null set should be the set\n")
 	}
 }
 
@@ -106,7 +106,7 @@ func TestIntersect(t *testing.T) {
 
 	ns := s1.Intersect(nil)
 	if ns != nil {
-		t.Errorf("Intersection with null set should be a null set")
+		t.Errorf("Intersection with null set should be a null set\n")
 	}
 }
 
@@ -133,7 +133,7 @@ func TestDiff(t *testing.T) {
 
 	ns := s1.Diff(nil)
 	if ns != s1 {
-		t.Errorf("Difference with null set should be a the set")
+		t.Errorf("Difference with null set should be a the set\n")
 	}
 }
 
@@ -182,11 +182,11 @@ func TestIsSubset(t *testing.T) {
 	s2.Add("c")
 
 	if !s1.IsSubset(s2) {
-		t.Errorf("S1 is not a subset of S2 as expected")
+		t.Errorf("S1 is not a subset of S2 as expected\n")
 	}
 
 	if s1.IsSubset(nil) {
-		t.Errorf("The set should not be a subset of an empty set")
+		t.Errorf("The set should not be a subset of an empty set\n")
 	}
 }
 
@@ -203,11 +203,11 @@ func TestIsProperSubset(t *testing.T) {
 	s2.Add("c")
 
 	if !s1.IsProperSubset(s2) {
-		t.Errorf("S1 is not a subset of S2 as expected")
+		t.Errorf("S1 is not a subset of S2 as expected\n")
 	}
 
 	if s1.IsProperSubset(nil) {
-		t.Errorf("The set should not be a proper subset of an empty set")
+		t.Errorf("The set should not be a proper subset of an empty set\n")
 	}
 }
 
@@ -225,22 +225,22 @@ func TestEqual(t *testing.T) {
 	s2.Add("c")
 
 	if !s1.Equal(s2) {
-		t.Errorf("S1 is not equal to S2")
+		t.Errorf("S1 is not equal to S2\n")
 	}
 
 	s2.Add("d")
 	if s1.Equal(s2) {
-		t.Errorf("S1 should not be equal to S2")
+		t.Errorf("S1 should not be equal to S2\n")
 	}
 
 	s1.Add("d")
 	s1.Add("e")
 	if s1.Equal(s2) {
-		t.Errorf("S1 should not be equal to S2")
+		t.Errorf("S1 should not be equal to S2\n")
 	}
 
 	if s1.Equal(nil) {
-		t.Errorf("The set should not equal the empty set")
+		t.Errorf("The set should not equal the empty set\n")
 	}
 }
 
@@ -260,7 +260,7 @@ func TestIter(t *testing.T) {
 
 	for k, v := range m {
 		if !v {
-			t.Errorf("Element %v was not interated in the set", k)
+			t.Errorf("Element %v was not interated in the set\n", k)
 		}
 	}
 }
