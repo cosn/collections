@@ -38,7 +38,7 @@ func (q *Queue) Len() int {
 	return q.l.Len()
 }
 
-// IsEmpty returns a value indicating whether the queue has any elements.
+// IsEmpty returns true the queue has no elements.
 // O(1)
 func (q *Queue) IsEmpty() bool {
 	return q.l.Len() == 0

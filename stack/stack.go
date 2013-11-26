@@ -53,7 +53,7 @@ func (s *Stack) Peek() interface{} {
 	return s.storage[s.i]
 }
 
-// IsEmpty returns a value indicating whether the stack has any elements.
+// IsEmpty returns true if the stack has no elements.
 // O(1)
 func (s *Stack) IsEmpty() bool {
 	return s.Len() == 0
