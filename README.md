@@ -23,7 +23,7 @@ go test github.com/cosn/collections...
 - B-Tree (TODO)
 - Binary Search Tree (TODO)
 - Queue
-- Set (TODO)
+- Set
 - Sorted Set (TODO)
 - Stack
 - Ternary Search Tree (TODO)
