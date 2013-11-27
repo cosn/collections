@@ -105,8 +105,14 @@ func TestIntersect(t *testing.T) {
 	}
 
 	ns := s1.Intersect(nil)
-	if ns != nil {
-		t.Errorf("Intersection with null set should be a null set\n")
+	if !ns.IsEmpty() {
+		t.Errorf("Intersection with null set should be an empty set\n")
+	}
+
+	e := new(Set)
+	es := s1.Intersect(e)
+	if !es.IsEmpty() {
+		t.Errorf("Intersection with empty set should be an empty set\n")
 	}
 }
 

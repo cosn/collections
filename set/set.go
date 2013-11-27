@@ -35,14 +35,15 @@ func (s *Set) Union(t *Set) *Set {
 }
 
 // Intersect returns the intersection of sets s and t in a new set.
+// If t is null or empty, the result is an empty set
 // O(min(n,m)
 func (s *Set) Intersect(t *Set) *Set {
-	if t == nil {
-		return nil
-	}
-
 	ns := new(Set)
 	ns.Init()
+
+	if t == nil || t.Len() == 0 {
+		return ns
+	}
 
 	// find the smaller Set to iterate through
 	var ss, ls *Set
@@ -66,7 +67,7 @@ func (s *Set) Intersect(t *Set) *Set {
 // Diff returns the difference between sets s and t in a new set.
 // O(n)
 func (s *Set) Diff(t *Set) *Set {
-	if t == nil {
+	if t == nil || t.Len() == 0 {
 		return s
 	}
 
