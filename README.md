@@ -21,8 +21,11 @@ go test github.com/cosn/collections...
 ## Included structures
 
 - B-Tree (TODO)
+- B+ Tree (TODO)
 - Binary Search Tree (TODO)
+- Bloom Filter (TODO)
 - Queue
+- Red-Black Tree (TODO)
 - Set
 - Sorted Set (TODO)
 - Stack
