@@ -52,7 +52,7 @@ func insert(n *node, k int, v interface{}) (r *node, added bool) {
 	return
 }
 
-// Delete removes a given value from the tree and retruns true if it was removed
+// Delete removes a given key from the tree and returns true if it was removed
 // Average: O(log(n)) Worst: O(n)
 func (t *BST) Delete(k int) (deleted bool) {
 	_, deleted = delete(t.r, k)

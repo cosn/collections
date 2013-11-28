@@ -18,8 +18,12 @@ func TestInsert(t *testing.T) {
 		}
 	}
 
-	if bst.Insert(4, 4) {
+	if bst.Insert(4, 44) {
 		t.Error("Duplicate elements should not be added")
+	}
+
+	if bst.Find(4) == 44 {
+		t.Error("Previously inserted elements should not be updated")
 	}
 
 	if c := bst.c; c != len(expected) {
