@@ -120,6 +120,24 @@ func find(n *node, k int) interface{} {
 	return nil
 }
 
+// Clear removes all the nodes from the tree
+// O(n)
+func (t *BST) Clear() {
+	t.r = clear(t.r)
+	t.c = 0
+}
+
+// clear recursively removes all the nodes
+func clear(n *node) *node {
+	if n != nil {
+		n.l = clear(n.l)
+		n.r = clear(n.r)
+	}
+	n = nil
+
+	return n
+}
+
 // Traverse provides an iterator over the tree
 // O(n)
 func (t *BST) Traverse(tt TraversalType) <-chan interface{} {

@@ -118,3 +118,23 @@ func TestTraverse_PostOrder(t *testing.T) {
 		i++
 	}
 }
+
+func TestClear(t *testing.T) {
+	elements := []int{5, 3, 7, 4, 6}
+
+	bst := new(BST)
+
+	for _, i := range elements {
+		bst.Insert(i, i)
+	}
+
+	bst.Clear()
+
+	if c := bst.c; c != 0 {
+		t.Errorf("Expected tree to be empty, but has %v elements", c)
+	}
+
+	if p := bst.String(); len(p) != 0 {
+		t.Errorf("No elements expected in the tree, but found %v", p)
+	}
+}
