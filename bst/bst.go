@@ -80,8 +80,7 @@ func delete(n *node, k int) (r *node, deleted bool) {
 			for s.r != nil {
 				s = s.r
 			}
-			r.k = s.k
-			r.v = s.v
+			r = s
 			r.l, deleted = delete(s, s.k)
 		} else if n.l != nil {
 			r = n.l
