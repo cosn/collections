@@ -27,7 +27,6 @@ go test github.com/cosn/collections...
 - Queue
 - Red-Black Tree (TODO)
 - Set
-- Sorted Set (TODO)
 - Stack
 - Ternary Search Tree (TODO)
 - Trie (TODO)
