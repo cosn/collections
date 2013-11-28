@@ -11,7 +11,8 @@ type BST struct {
 
 // node is the internal representation of a binary tree node
 type node struct {
-	v    int
+	k    int
+	v    interface{}
 	l, r *node
 }
 
@@ -24,10 +25,10 @@ const (
 	PostOrder
 )
 
-// Insert adds a given value to the tree and returns true if it was added
+// Insert adds a given key+value to the tree and returns true if it was added
 // Average: O(log(n)) Worst: O(n)
-func (t *BST) Insert(v int) (added bool) {
-	t.r, added = insert(t.r, v)
+func (t *BST) Insert(k int, v interface{}) (added bool) {
+	t.r, added = insert(t.r, k, v)
 	if added {
 		t.c++
 	}
@@ -35,17 +36,17 @@ func (t *BST) Insert(v int) (added bool) {
 	return
 }
 
-// insert recusively adds a value in the tree
-func insert(n *node, v int) (r *node, added bool) {
+// insert recusively adds a key+value in the tree
+func insert(n *node, k int, v interface{}) (r *node, added bool) {
 	if r = n; n == nil {
 		// keep track of how many elements we have in the tree
 		// to optimize the channel length during traversal
-		r = &node{v: v}
+		r = &node{k: k, v: v}
 		added = true
-	} else if v < n.v {
-		r.l, added = insert(n.l, v)
-	} else if v > n.v {
-		r.r, added = insert(n.r, v)
+	} else if k < n.k {
+		r.l, added = insert(n.l, k, v)
+	} else if k > n.k {
+		r.r, added = insert(n.r, k, v)
 	}
 
 	return
@@ -53,8 +54,8 @@ func insert(n *node, v int) (r *node, added bool) {
 
 // Delete removes a given value from the tree and retruns true if it was removed
 // Average: O(log(n)) Worst: O(n)
-func (t *BST) Delete(v int) (deleted bool) {
-	_, deleted = delete(t.r, v)
+func (t *BST) Delete(k int) (deleted bool) {
+	_, deleted = delete(t.r, k)
 	if deleted {
 		t.c--
 	}
@@ -62,16 +63,16 @@ func (t *BST) Delete(v int) (deleted bool) {
 	return
 }
 
-// delete recursively deletes a value from the tree
-func delete(n *node, v int) (r *node, deleted bool) {
+// delete recursively deletes a key from the tree
+func delete(n *node, k int) (r *node, deleted bool) {
 	if r = n; n == nil {
 		return nil, false
 	}
 
-	if v < n.v {
-		r.l, deleted = delete(n.l, v)
-	} else if v > n.v {
-		r.r, deleted = delete(n.r, v)
+	if k < n.k {
+		r.l, deleted = delete(n.l, k)
+	} else if k > n.k {
+		r.r, deleted = delete(n.r, k)
 	} else {
 		if n.l != nil && n.r != nil {
 			// find the right most element in the left subtree
@@ -79,8 +80,9 @@ func delete(n *node, v int) (r *node, deleted bool) {
 			for s.r != nil {
 				s = s.r
 			}
+			r.k = s.k
 			r.v = s.v
-			r.l, deleted = delete(s, s.v)
+			r.l, deleted = delete(s, s.k)
 		} else if n.l != nil {
 			r = n.l
 			deleted = true
@@ -96,32 +98,32 @@ func delete(n *node, v int) (r *node, deleted bool) {
 	return
 }
 
-// Contains returns true if the value given exists in the tree
+// Find returns the value found at the given key
 // Average: O(log(n)) Worst: O(n)
-func (t *BST) Contains(v int) bool {
-	return contains(t.r, v)
+func (t *BST) Find(k int) interface{} {
+	return find(t.r, k)
 }
 
-func contains(n *node, v int) bool {
+func find(n *node, k int) interface{} {
 	if n == nil {
-		return false
+		return nil
 	}
 
-	if n.v == v {
-		return true
-	} else if v < n.v {
-		return contains(n.l, v)
-	} else if v > n.v {
-		return contains(n.r, v)
+	if n.k == k {
+		return n.v
+	} else if k < n.k {
+		return find(n.l, k)
+	} else if k > n.k {
+		return find(n.r, k)
 	}
 
-	return false
+	return nil
 }
 
 // Traverse provides an iterator over the tree
 // O(n)
-func (t *BST) Traverse(tt TraversalType) <-chan int {
-	c := make(chan int, t.c)
+func (t *BST) Traverse(tt TraversalType) <-chan interface{} {
+	c := make(chan interface{}, t.c)
 	go func() {
 		switch tt {
 
@@ -139,7 +141,7 @@ func (t *BST) Traverse(tt TraversalType) <-chan int {
 }
 
 // inOrder returns the left, parent, right nodes
-func inOrder(n *node, c chan int) {
+func inOrder(n *node, c chan interface{}) {
 	if n == nil {
 		return
 	}
@@ -150,7 +152,7 @@ func inOrder(n *node, c chan int) {
 }
 
 // preOrder returns the parent, left, right nodes
-func preOrder(n *node, c chan int) {
+func preOrder(n *node, c chan interface{}) {
 	if n == nil {
 		return
 	}
@@ -161,7 +163,7 @@ func preOrder(n *node, c chan int) {
 }
 
 // postOrder returns the left, right, parent nodes
-func postOrder(n *node, c chan int) {
+func postOrder(n *node, c chan interface{}) {
 	if n == nil {
 		return
 	}

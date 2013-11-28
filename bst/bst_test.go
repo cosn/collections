@@ -7,18 +7,18 @@ func TestInsert(t *testing.T) {
 	bst := new(BST)
 
 	for _, i := range expected {
-		if !bst.Insert(i) {
+		if !bst.Insert(i, i) {
 			t.Errorf("Element %v should have been added to the tree", i)
 		}
 	}
 
 	for _, i := range expected {
-		if !bst.Contains(i) {
+		if bst.Find(i) == nil {
 			t.Errorf("Element %v expected to be in the tree, but was not", i)
 		}
 	}
 
-	if bst.Insert(4) {
+	if bst.Insert(4, 4) {
 		t.Error("Duplicate elements should not be added")
 	}
 
@@ -32,7 +32,7 @@ func TestRemove(t *testing.T) {
 	bst := new(BST)
 
 	for _, i := range expected {
-		bst.Insert(i)
+		bst.Insert(i, i)
 	}
 
 	if !bst.Delete(6) {
@@ -40,12 +40,12 @@ func TestRemove(t *testing.T) {
 	}
 
 	for _, i := range expected[0:3] {
-		if !bst.Contains(i) {
+		if bst.Find(i) == nil {
 			t.Errorf("Element %v expected to be in the tree, but was not", i)
 		}
 	}
 
-	if d := expected[len(expected)-1]; bst.Contains(d) {
+	if d := expected[len(expected)-1]; bst.Find(d) != nil {
 		t.Errorf("Element %v should have been removed from the tree", d)
 	}
 
@@ -65,7 +65,7 @@ func TestTraverse_InOrder(t *testing.T) {
 	bst := new(BST)
 
 	for _, i := range elements {
-		bst.Insert(i)
+		bst.Insert(i, i)
 	}
 
 	i := 0
@@ -84,7 +84,7 @@ func TestTraverse_PreOrder(t *testing.T) {
 	bst := new(BST)
 
 	for _, i := range elements {
-		bst.Insert(i)
+		bst.Insert(i, i)
 	}
 
 	i := 0
@@ -103,7 +103,7 @@ func TestTraverse_PostOrder(t *testing.T) {
 	bst := new(BST)
 
 	for _, i := range elements {
-		bst.Insert(i)
+		bst.Insert(i, i)
 	}
 
 	i := 0
