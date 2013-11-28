@@ -22,7 +22,7 @@ go test github.com/cosn/collections...
 
 - B-Tree (TODO)
 - B+ Tree (TODO)
-- Binary Search Tree (TODO)
+- Binary Search Tree
 - Bloom Filter (TODO)
 - Queue
 - Red-Black Tree (TODO)
