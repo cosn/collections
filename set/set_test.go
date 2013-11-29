@@ -2,7 +2,7 @@ package set
 
 import "testing"
 
-func TestAddRemoveContainsClear(t *testing.T) {
+func TestAddRemoveHasClear(t *testing.T) {
 	s := new(Set)
 	s.Init()
 
@@ -13,7 +13,7 @@ func TestAddRemoveContainsClear(t *testing.T) {
 
 	s.Add("a")
 	testLen(t, s.Len(), 1)
-	if !s.Contains("a") {
+	if !s.Has("a") {
 		t.Errorf("'a' was not found in the set\n")
 	}
 
@@ -25,23 +25,23 @@ func TestAddRemoveContainsClear(t *testing.T) {
 
 	s.Add("b")
 	testLen(t, s.Len(), 2)
-	if !s.Contains("a") {
+	if !s.Has("a") {
 		t.Errorf("'a' was not found in the set\n")
 	}
-	if !s.Contains("b") {
+	if !s.Has("b") {
 		t.Errorf("'b' was not found in the set\n")
 	}
 
 	s.Add("c")
 	s.Remove("b")
 	testLen(t, s.Len(), 2)
-	if !s.Contains("a") {
+	if !s.Has("a") {
 		t.Errorf("'a' was not found in the set\n")
 	}
-	if s.Contains("b") {
+	if s.Has("b") {
 		t.Errorf("'b' was found in the set, but should not have been\n")
 	}
-	if !s.Contains("c") {
+	if !s.Has("c") {
 		t.Errorf("'c' was not found in the set\n")
 	}
 
@@ -69,7 +69,7 @@ func TestUnion(t *testing.T) {
 	testLen(t, s.Len(), 4)
 
 	for i := 0; i <= 3; i++ {
-		if !s.Contains(i) {
+		if !s.Has(i) {
 			t.Errorf("Element '%v' not found\n", i)
 		}
 	}
@@ -99,7 +99,7 @@ func TestIntersect(t *testing.T) {
 	testLen(t, s.Len(), 2)
 
 	for i := 1; i <= 2; i++ {
-		if !s.Contains(i) {
+		if !s.Has(i) {
 			t.Errorf("Element '%v' not found\n", i)
 		}
 	}
@@ -133,7 +133,7 @@ func TestDiff(t *testing.T) {
 
 	testLen(t, s.Len(), 1)
 
-	if !s.Contains(0) {
+	if !s.Has(0) {
 		t.Errorf("Element '%v' not found\n", 0)
 	}
 
@@ -161,15 +161,15 @@ func TestSymetricDiff(t *testing.T) {
 
 	testLen(t, s.Len(), 3)
 
-	if !s.Contains(0) {
+	if !s.Has(0) {
 		t.Errorf("Element '%v' not found\n", 0)
 	}
 
-	if !s.Contains(1) {
+	if !s.Has(1) {
 		t.Errorf("Element '%v' not found\n", 1)
 	}
 
-	if !s.Contains(5) {
+	if !s.Has(5) {
 		t.Errorf("Element '%v' not found\n", 5)
 	}
 }

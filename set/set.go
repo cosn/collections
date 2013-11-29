@@ -148,9 +148,9 @@ func (s *Set) Equals(t *Set) bool {
 	return true
 }
 
-// Contains returns true if the set contains the given element.
+// Has returns true if the set contains the given element.
 // O(1)
-func (s *Set) Contains(e interface{}) bool {
+func (s *Set) Has(e interface{}) bool {
 	return s.s[e]
 }
 
