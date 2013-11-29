@@ -20,13 +20,14 @@ go test github.com/cosn/collections...
 
 ## Included structures
 
-- B-Tree (TODO)
 - B+ Tree (TODO)
 - Binary Search Tree
 - Bloom Filter (TODO)
 - Queue
+- Radix Tree (TODO)
 - Red-Black Tree (TODO)
 - Set
+- Splay Tree (TODO)
 - Stack
 - Ternary Search Tree (TODO)
 - Trie (TODO)
