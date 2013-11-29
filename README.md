@@ -20,14 +20,14 @@ go test github.com/cosn/collections...
 
 ## Included structures
 
-- B+ Tree (TODO)
-- Binary Search Tree
-- Bloom Filter (TODO)
-- Queue
-- Radix Tree (TODO)
-- Red-Black Tree (TODO)
-- Set
-- Splay Tree (TODO)
-- Stack
-- Ternary Search Tree (TODO)
-- Trie (TODO)
+- [B+ Tree](http://en.wikipedia.org/wiki/B+_tree) (TODO)
+- [Binary Search Tree](http://en.wikipedia.org/wiki/Binary_search_tree)
+- [Bloom Filter](http://en.wikipedia.org/wiki/Bloom_filter) (TODO)
+- [Queue](http://en.wikipedia.org/wiki/Queue)
+- [Radix Tree](http://en.wikipedia.org/wiki/Radix_tree) (TODO)
+- [Red-Black Tree](http://en.wikipedia.org/wiki/Red_black_tree) (TODO)
+- [Set](http://en.wikipedia.org/wiki/Set_(computer_science))
+- [Splay Tree](http://en.wikipedia.org/wiki/Splay_tree) (TODO)
+- [Stack](http://en.wikipedia.org/wiki/Stack)
+- [Ternary Search Tree](http://en.wikipedia.org/wiki/Ternary_search_tree) (TODO)
+- [Trie](http://en.wikipedia.org/wiki/Trie) (TODO)
