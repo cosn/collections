@@ -1,7 +1,9 @@
 package trie
 
-import "testing"
-import "fmt"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestInsertHas(t *testing.T) {
 	values := []string{"hey", "hello", "hell", "magazine", "magnificent", "magazines"}
