@@ -1,6 +1,9 @@
 package bst
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestInsert(t *testing.T) {
 	expected := []int{5, 3, 7, 4, 6}
@@ -137,4 +140,19 @@ func TestClear(t *testing.T) {
 	if p := bst.String(); len(p) != 0 {
 		t.Errorf("No elements expected in the tree, but found %v", p)
 	}
+}
+
+func (t *BST) String() (s string) {
+	print(t.r, &s)
+	return
+}
+
+func print(n *node, s *string) {
+	if n == nil {
+		return
+	}
+
+	*s += fmt.Sprintf("%p %v\n", n, n)
+	print(n.l, s)
+	print(n.r, s)
 }

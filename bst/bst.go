@@ -1,8 +1,6 @@
 // Package bst implements an unbalanced binary search tree.
 package bst
 
-import "fmt"
-
 // BST is the internal representation of a binary search tree.
 type BST struct {
 	r *node
@@ -188,21 +186,4 @@ func postOrder(n *node, c chan interface{}) {
 	postOrder(n.l, c)
 	postOrder(n.r, c)
 	c <- n.v
-}
-
-// String prints the nodes in the tree.
-func (t *BST) String() (s string) {
-	print(t.r, &s)
-	return
-}
-
-// print recusively prints the pre-order nodes.
-func print(n *node, s *string) {
-	if n == nil {
-		return
-	}
-
-	*s += fmt.Sprintf("%p %v\n", n, n)
-	print(n.l, s)
-	print(n.r, s)
 }
