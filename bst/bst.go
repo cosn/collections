@@ -1,22 +1,22 @@
-// Package bst implements an unbalanced binary search tree
+// Package bst implements an unbalanced binary search tree.
 package bst
 
 import "fmt"
 
-// BST is the internal representation of a binary search tree
+// BST is the internal representation of a binary search tree.
 type BST struct {
 	r *node
 	c int
 }
 
-// node is the internal representation of a binary tree node
+// node is the internal representation of a binary tree node.
 type node struct {
 	k    int
 	v    interface{}
 	l, r *node
 }
 
-// TraversalType represents one of the three know traversals
+// TraversalType represents one of the three know traversals.
 type TraversalType int
 
 const (
@@ -25,7 +25,7 @@ const (
 	PostOrder
 )
 
-// Insert adds a given key+value to the tree and returns true if it was added
+// Insert adds a given key+value to the tree and returns true if it was added.
 // Average: O(log(n)) Worst: O(n)
 func (t *BST) Insert(k int, v interface{}) (added bool) {
 	t.r, added = insert(t.r, k, v)
@@ -36,7 +36,7 @@ func (t *BST) Insert(k int, v interface{}) (added bool) {
 	return
 }
 
-// insert recusively adds a key+value in the tree
+// insert recusively adds a key+value in the tree.
 func insert(n *node, k int, v interface{}) (r *node, added bool) {
 	if r = n; n == nil {
 		// keep track of how many elements we have in the tree
@@ -52,7 +52,7 @@ func insert(n *node, k int, v interface{}) (r *node, added bool) {
 	return
 }
 
-// Delete removes a given key from the tree and returns true if it was removed
+// Delete removes a given key from the tree and returns true if it was removed.
 // Average: O(log(n)) Worst: O(n)
 func (t *BST) Delete(k int) (deleted bool) {
 	_, deleted = delete(t.r, k)
@@ -63,7 +63,7 @@ func (t *BST) Delete(k int) (deleted bool) {
 	return
 }
 
-// delete recursively deletes a key from the tree
+// delete recursively deletes a key from the tree.
 func delete(n *node, k int) (r *node, deleted bool) {
 	if r = n; n == nil {
 		return nil, false
@@ -97,7 +97,7 @@ func delete(n *node, k int) (r *node, deleted bool) {
 	return
 }
 
-// Find returns the value found at the given key
+// Find returns the value found at the given key.
 // Average: O(log(n)) Worst: O(n)
 func (t *BST) Find(k int) interface{} {
 	return find(t.r, k)
@@ -119,14 +119,14 @@ func find(n *node, k int) interface{} {
 	return nil
 }
 
-// Clear removes all the nodes from the tree
+// Clear removes all the nodes from the tree.
 // O(n)
 func (t *BST) Clear() {
 	t.r = clear(t.r)
 	t.c = 0
 }
 
-// clear recursively removes all the nodes
+// clear recursively removes all the nodes.
 func clear(n *node) *node {
 	if n != nil {
 		n.l = clear(n.l)
@@ -137,7 +137,7 @@ func clear(n *node) *node {
 	return n
 }
 
-// Traverse provides an iterator over the tree
+// Traverse provides an iterator over the tree.
 // O(n)
 func (t *BST) Traverse(tt TraversalType) <-chan interface{} {
 	c := make(chan interface{}, t.c)
@@ -157,7 +157,7 @@ func (t *BST) Traverse(tt TraversalType) <-chan interface{} {
 	return c
 }
 
-// inOrder returns the left, parent, right nodes
+// inOrder returns the left, parent, right nodes.
 func inOrder(n *node, c chan interface{}) {
 	if n == nil {
 		return
@@ -168,7 +168,7 @@ func inOrder(n *node, c chan interface{}) {
 	inOrder(n.r, c)
 }
 
-// preOrder returns the parent, left, right nodes
+// preOrder returns the parent, left, right nodes.
 func preOrder(n *node, c chan interface{}) {
 	if n == nil {
 		return
@@ -179,7 +179,7 @@ func preOrder(n *node, c chan interface{}) {
 	preOrder(n.r, c)
 }
 
-// postOrder returns the left, right, parent nodes
+// postOrder returns the left, right, parent nodes.
 func postOrder(n *node, c chan interface{}) {
 	if n == nil {
 		return
@@ -190,13 +190,13 @@ func postOrder(n *node, c chan interface{}) {
 	c <- n.v
 }
 
-// String prints the nodes in the tree
+// String prints the nodes in the tree.
 func (t *BST) String() (s string) {
 	print(t.r, &s)
 	return
 }
 
-// print recusively prints the pre-order nodes
+// print recusively prints the pre-order nodes.
 func print(n *node, s *string) {
 	if n == nil {
 		return
