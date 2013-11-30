@@ -30,34 +30,28 @@ func (t *Trie) Init(size rune) {
 // Adds a new string to the trie.
 // O(len(s))
 func (t *Trie) Insert(s string) {
-	r := []rune(s)
-	t.r.n[t.first(r)] = insert(t.start(r), r, 0, t)
-}
+	r := t.r
 
-// insert recursively walks trie and adds nodes.
-func insert(n *node, s []rune, i int, t *Trie) (r *node) {
-	end := i == len(s)-1
-	if r = n; n == nil {
-		r = &node{s[i], make([]*node, t.s), end}
-		// if this node is the string termination, incrase the count
-		// so we can acurately return the number of words in the trie
-		if end {
+	for i, c := range s {
+		n := r.next(c, t.s)
+		end := i == len(s)-1
+		if n == nil {
+			n = &node{c, make([]*node, t.s), end}
+			r.n[c%t.s] = n
+			if end {
+				t.c++
+			}
+		} else if end && !n.e {
+			// if the node previously existed, but wasn't a terminating string,
+			// we need to now mark it as such (i.e. insert("foobar"), insert("foo"))
+			// also increment the number of words in the trie in this scenario
+			n.e = true
 			t.c++
 		}
-	}
 
-	if !end {
-		i++
-		r.n[s[i]%t.s] = insert(r.next(s[i], t.s), s, i, t)
-	} else if !r.e {
-		// if the node previously existed, but wasn't a terminating string,
-		// we need to now mark it as such (i.e. insert("foobar"), insert("foo"))
-		// also increment the number of words in the trie in this scenario
-		r.e = true
-		t.c++
+		// the child becomes the parent
+		r = n
 	}
-
-	return
 }
 
 // Clear removes all the elements from the trie.
@@ -76,8 +70,7 @@ func (t *Trie) Len() int {
 // Has returns true if the trie contains the given word.
 // O(len(s))
 func (t *Trie) Has(s string) bool {
-	r := []rune(s)
-	n := traverse(t.start(r), r, t.s)
+	n := traverse(t.start(s), s, t.s)
 
 	return n != nil && n.e
 }
@@ -86,8 +79,7 @@ func (t *Trie) Has(s string) bool {
 // the given string.
 // O(log(N))
 func (t *Trie) StartsWith(s string) (matches []string) {
-	r := []rune(s)
-	n := traverse(t.start(r), r, t.s)
+	n := traverse(t.start(s), s, t.s)
 
 	return append(matches, match(n, s)...)
 }
@@ -112,34 +104,28 @@ func match(n *node, s string) (matches []string) {
 }
 
 // traverse returns the last matching node for a given word.
-func traverse(n *node, r []rune, s rune) *node {
-	for i, c := range r {
+func traverse(n *node, s string, size rune) *node {
+	for i, c := range s {
 		if n == nil || n.c != c {
 			break
 		}
 
-		if i != len(r)-1 {
-			n = n.next(r[i+1], s)
+		if i != len(s)-1 {
+			n = n.next(rune(s[i+1]), size)
 		}
 	}
 
 	return n
 }
 
-// first returns the first character in the word based
-// on the size of the trie's alphabet.
-func (t *Trie) first(r []rune) rune {
-	return r[0] % t.s
-}
-
 // start returns the first node under the root based on the
 // word's first character and the trie's alphabet.
-func (t *Trie) start(r []rune) *node {
-	return t.r.n[t.first(r)]
+func (t *Trie) start(s string) *node {
+	return t.r.n[(rune(s[0]) % t.s)]
 }
 
 // next returns the next node under the current node based
 // on the given letter in the word and the trie's alphabet.
-func (n *node) next(r rune, s rune) *node {
-	return n.n[r%s]
+func (n *node) next(r rune, size rune) *node {
+	return n.n[r%size]
 }
