@@ -10,9 +10,11 @@ type Trie struct {
 
 // node is the internal representation of a trie node.
 type node struct {
-	c rune
-	n []*node
-	e bool
+	c  rune
+	n  map[rune]*node
+	nc int
+	e  bool
+	p  *node
 }
 
 // Init initializes a trie with a given alphabet size.
@@ -23,7 +25,7 @@ func (t *Trie) Init(size rune) {
 		panic("Trie size must be a positive number")
 	}
 
-	t.r = &node{n: make([]*node, size)}
+	t.r = &node{n: make(map[rune]*node, size)}
 	t.s = size
 }
 
@@ -36,8 +38,11 @@ func (t *Trie) Insert(s string) {
 		n := r.next(c, t.s)
 		end := i == len(s)-1
 		if n == nil {
-			n = &node{c, make([]*node, t.s), end}
+			n = &node{c, make(map[rune]*node, t.s), 0, end, r}
 			r.n[c%t.s] = n
+			// increment the number of children for the parent
+			// this information is useful for deletions
+			r.nc++
 			if end {
 				t.w++
 			}
@@ -54,17 +59,40 @@ func (t *Trie) Insert(s string) {
 	}
 }
 
-// Clear removes all the elements from the trie.
-// O(1)
-func (t *Trie) Clear() {
-	t.Init(t.s)
-	t.w = 0
-}
+// Delete returns true if the given word was removed from the trie.
+// O(len(s))
+func (t *Trie) Delete(s string) bool {
+	n := traverse(t.start(s), s, t.s)
 
-// Len returns the number of words in the trie.
-// O(1)
-func (t *Trie) Len() int {
-	return t.w
+	// the word doesn't exist in the trie, so nothing to remove
+	if n == nil || !n.e {
+		return false
+	}
+
+	for n != nil {
+		if n.nc == 0 {
+			// the node has no children, so remove it
+			if n.p != nil {
+				n.p.nc--
+				n.p.n[n.c] = nil
+			}
+
+			// move up, but only continue until
+			// we find a terminating node
+			n = n.p
+			if n.e {
+				break
+			}
+		} else {
+			// the current node has children
+			// in this case, the node is no longer terminating
+			// but nothing can be deleted
+			n.e = false
+			break
+		}
+	}
+
+	return true
 }
 
 // Has returns true if the trie contains the given word.
@@ -116,6 +144,19 @@ func traverse(n *node, s string, size rune) *node {
 	}
 
 	return n
+}
+
+// Clear removes all the elements from the trie.
+// O(1)
+func (t *Trie) Clear() {
+	t.Init(t.s)
+	t.w = 0
+}
+
+// Len returns the number of words in the trie.
+// O(1)
+func (t *Trie) Len() int {
+	return t.w
 }
 
 // start returns the first node under the root based on the

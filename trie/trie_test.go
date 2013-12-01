@@ -71,7 +71,34 @@ func TestLenClear(t *testing.T) {
 	}
 }
 
+func TestDelete(t *testing.T) {
+	values := []string{"hey", "hello", "hell", "magazine", "magnificent", "magazines"}
+	expected := []string{"hey", "hello", "hell", "magazine", "magnificent"}
+
+	trie := new(Trie)
+	trie.Init(256)
+
+	for _, s := range values {
+		trie.Insert(s)
+	}
+
+	if !trie.Delete("magazines") {
+		t.Error("Value should have been removed")
+	}
+
+	if trie.Has("magazines") {
+		t.Error("Word should have been removed, but is still in trie")
+	}
+
+	for _, s := range expected {
+		if !trie.Has(s) {
+			t.Errorf("Trie expected to contain '%v', but did not", s)
+		}
+	}
+}
+
 func (t *Trie) String() (s string) {
+	s = fmt.Sprintf("%v\n", t.w)
 	print(t.r, "", &s)
 	return
 }
@@ -84,7 +111,7 @@ func print(n *node, w string, s *string) {
 	*s += fmt.Sprintf("%v%q (%t)\n", w, n.c, n.e)
 
 	w += " "
-	for c := 0; c < len(n.n); c++ {
-		print(n.n[c], w, s)
+	for _, c := range n.n {
+		print(c, w, s)
 	}
 }
