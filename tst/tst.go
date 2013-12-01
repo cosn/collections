@@ -51,6 +51,47 @@ func insert(n, p *node, s string, t *TST) *node {
 	return n
 }
 
+func (t *TST) Delete(s string) bool {
+	f, n := traverse(t.r, s)
+
+	if !f {
+		return false
+	}
+
+	for n != nil {
+		if !n.hasChildren() {
+			if n.p == nil {
+				// the node is the root, so just remove it
+				n = nil
+			} else if n.p != nil {
+				// remove the link from the parent
+				if n.p.eq == n {
+					n.p.eq = nil
+				} else if n.p.lo == n {
+					n.p.lo = nil
+				} else if n.p.hi == n {
+					n.p.hi = nil
+				}
+
+				// if the parent isn't a terminating node, move up
+				// otherwise, stop where we are
+				if !n.p.e {
+					n = n.p
+				} else {
+					n = nil
+				}
+			}
+		} else {
+			// the node has children, so just mark it as non-terminating
+			n.e = false
+			break
+		}
+	}
+
+	t.w--
+	return true
+}
+
 // Has returns true if the tree contains the given word.
 // O(len(s))
 func (t *TST) Has(s string) bool {
@@ -121,4 +162,9 @@ func (t *TST) Clear() {
 // O(1)
 func (t *TST) Len() int {
 	return t.w
+}
+
+// hasChildren returns true if the node has any children
+func (n *node) hasChildren() bool {
+	return n.lo != nil || n.eq != nil || n.hi != nil
 }

@@ -68,6 +68,43 @@ func TestLenClear(t *testing.T) {
 	}
 }
 
+func TestDelete(t *testing.T) {
+	values := []string{"hey", "hello", "hell", "magazine", "magnificent", "magazines"}
+	expected := []string{"hey", "hello", "magazine", "magnificent"}
+
+	tst := new(TST)
+
+	for _, s := range values {
+		tst.Insert(s)
+	}
+
+	if !tst.Delete("magazines") {
+		t.Error("Value should have been removed")
+	}
+
+	if tst.Has("magazines") {
+		t.Error("Word should have been removed, but is still in tree")
+	}
+
+	if !tst.Delete("hell") {
+		t.Error("Value should have been removed")
+	}
+
+	if tst.Has("hell") {
+		t.Error("Word should have been removed, but is still in tree")
+	}
+
+	if l := tst.Len(); l != len(expected) {
+		t.Errorf("Number of words should be %v, but instead was %v", len(expected), l)
+	}
+
+	for _, s := range expected {
+		if !tst.Has(s) {
+			t.Errorf("Tree expected to contain '%v', but did not", s)
+		}
+	}
+}
+
 func (t *TST) String() (s string) {
 	s = fmt.Sprintf("%v\n", t.w)
 	print(t.r, "", "root: ", &s)
