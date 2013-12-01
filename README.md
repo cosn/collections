@@ -29,5 +29,5 @@ go test github.com/cosn/collections...
 - [Set](http://en.wikipedia.org/wiki/Set_(computer_science))
 - [Splay Tree](http://en.wikipedia.org/wiki/Splay_tree) (TODO)
 - [Stack](http://en.wikipedia.org/wiki/Stack)
-- [Ternary Search Tree](http://en.wikipedia.org/wiki/Ternary_search_tree) (TODO)
+- [Ternary Search Tree](http://en.wikipedia.org/wiki/Ternary_search_tree)
 - [Trie](http://en.wikipedia.org/wiki/Trie)
