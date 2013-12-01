@@ -77,7 +77,7 @@ func (t *Trie) Has(s string) bool {
 
 // StartsWith returns all words in the trie that begin with
 // the given string.
-// O(log(N))
+// O(N)
 func (t *Trie) StartsWith(s string) (matches []string) {
 	n := traverse(t.start(s), s, t.s)
 
