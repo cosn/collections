@@ -10,11 +10,10 @@ type Trie struct {
 
 // node is the internal representation of a trie node.
 type node struct {
-	char     rune
-	nodes    map[rune]*node
-	numNodes int
-	end      bool
-	parent   *node
+	char   rune
+	nodes  map[rune]*node
+	end    bool
+	parent *node
 }
 
 // Init initializes a trie with a given alphabet size.
@@ -38,11 +37,10 @@ func (t *Trie) Insert(s string) {
 		n := r.next(c, t.size)
 		end := i == len(s)-1
 		if n == nil {
-			n = &node{c, make(map[rune]*node, t.size), 0, end, r}
+			n = &node{c, make(map[rune]*node, t.size), end, r}
 			r.nodes[c%t.size] = n
 			// increment the number of children for the parent
 			// this information is useful for deletions
-			r.numNodes++
 			if end {
 				t.words++
 			}
@@ -70,10 +68,9 @@ func (t *Trie) Delete(s string) bool {
 	}
 
 	for n != nil {
-		if n.numNodes == 0 {
+		if len(n.nodes) == 0 {
 			// the node has no children, so remove it
 			if n.parent != nil {
-				n.parent.numNodes--
 				n.parent.nodes[n.char] = nil
 			}
 
