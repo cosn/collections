@@ -4,7 +4,7 @@ package trie
 // Trie is the internal representation of a trie.
 type Trie struct {
 	r *node
-	c int
+	w int
 	s rune
 }
 
@@ -27,7 +27,7 @@ func (t *Trie) Init(size rune) {
 	t.s = size
 }
 
-// Adds a new string to the trie.
+// Insert adds a new word to the trie.
 // O(len(s))
 func (t *Trie) Insert(s string) {
 	r := t.r
@@ -39,14 +39,14 @@ func (t *Trie) Insert(s string) {
 			n = &node{c, make([]*node, t.s), end}
 			r.n[c%t.s] = n
 			if end {
-				t.c++
+				t.w++
 			}
 		} else if end && !n.e {
 			// if the node previously existed, but wasn't a terminating string,
 			// we need to now mark it as such (i.e. insert("foobar"), insert("foo"))
 			// also increment the number of words in the trie in this scenario
 			n.e = true
-			t.c++
+			t.w++
 		}
 
 		// the child becomes the parent
@@ -58,13 +58,13 @@ func (t *Trie) Insert(s string) {
 // O(1)
 func (t *Trie) Clear() {
 	t.Init(t.s)
-	t.c = 0
+	t.w = 0
 }
 
 // Len returns the number of words in the trie.
 // O(1)
 func (t *Trie) Len() int {
-	return t.c
+	return t.w
 }
 
 // Has returns true if the trie contains the given word.
