@@ -29,7 +29,7 @@ func TestInsert(t *testing.T) {
 		t.Error("Previously inserted elements should not be updated")
 	}
 
-	if c := bst.c; c != len(expected) {
+	if c := bst.count; c != len(expected) {
 		t.Errorf("Tree expected to have %v elements, but has %v instead", len(expected), c)
 	}
 }
@@ -60,7 +60,7 @@ func TestRemove(t *testing.T) {
 		t.Error("Duplicate elements should not be delete")
 	}
 
-	if c := bst.c; c != len(expected)-1 {
+	if c := bst.count; c != len(expected)-1 {
 		t.Errorf("Tree expected to have %v elements, but has %v instead", len(expected)-1, c)
 	}
 }
@@ -133,7 +133,7 @@ func TestClear(t *testing.T) {
 
 	bst.Clear()
 
-	if c := bst.c; c != 0 {
+	if c := bst.count; c != 0 {
 		t.Errorf("Expected tree to be empty, but has %v elements", c)
 	}
 
@@ -143,7 +143,7 @@ func TestClear(t *testing.T) {
 }
 
 func (t *BST) String() (s string) {
-	print(t.r, &s)
+	print(t.root, &s)
 	return
 }
 

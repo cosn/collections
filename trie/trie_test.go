@@ -110,8 +110,8 @@ func TestDelete(t *testing.T) {
 }
 
 func (t *Trie) String() (s string) {
-	s = fmt.Sprintf("%v\n", t.w)
-	print(t.r, "", &s)
+	s = fmt.Sprintf("%v\n", t.words)
+	print(t.root, "", &s)
 	return
 }
 
@@ -120,10 +120,10 @@ func print(n *node, w string, s *string) {
 		return
 	}
 
-	*s += fmt.Sprintf("%v%q (%t)\n", w, n.c, n.e)
+	*s += fmt.Sprintf("%v%q (%t)\n", w, n.char, n.end)
 
 	w += " "
-	for _, c := range n.n {
+	for _, c := range n.nodes {
 		print(c, w, s)
 	}
 }

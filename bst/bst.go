@@ -3,14 +3,14 @@ package bst
 
 // BST is the internal representation of a binary search tree.
 type BST struct {
-	r *node
-	c int
+	root  *node
+	count int
 }
 
 // node is the internal representation of a binary tree node.
 type node struct {
-	k    int
-	v    interface{}
+	key  int
+	val  interface{}
 	l, r *node
 }
 
@@ -26,9 +26,9 @@ const (
 // Insert adds a given key+value to the tree and returns true if it was added.
 // Average: O(log(n)) Worst: O(n)
 func (t *BST) Insert(k int, v interface{}) (added bool) {
-	t.r, added = insert(t.r, k, v)
+	t.root, added = insert(t.root, k, v)
 	if added {
-		t.c++
+		t.count++
 	}
 
 	return
@@ -39,11 +39,11 @@ func insert(n *node, k int, v interface{}) (r *node, added bool) {
 	if r = n; n == nil {
 		// keep track of how many elements we have in the tree
 		// to optimize the channel length during traversal
-		r = &node{k: k, v: v}
+		r = &node{key: k, val: v}
 		added = true
-	} else if k < n.k {
+	} else if k < n.key {
 		r.l, added = insert(n.l, k, v)
-	} else if k > n.k {
+	} else if k > n.key {
 		r.r, added = insert(n.r, k, v)
 	}
 
@@ -53,9 +53,9 @@ func insert(n *node, k int, v interface{}) (r *node, added bool) {
 // Delete removes a given key from the tree and returns true if it was removed.
 // Average: O(log(n)) Worst: O(n)
 func (t *BST) Delete(k int) (deleted bool) {
-	_, deleted = delete(t.r, k)
+	_, deleted = delete(t.root, k)
 	if deleted {
-		t.c--
+		t.count--
 	}
 
 	return
@@ -67,9 +67,9 @@ func delete(n *node, k int) (r *node, deleted bool) {
 		return nil, false
 	}
 
-	if k < n.k {
+	if k < n.key {
 		r.l, deleted = delete(n.l, k)
-	} else if k > n.k {
+	} else if k > n.key {
 		r.r, deleted = delete(n.r, k)
 	} else {
 		if n.l != nil && n.r != nil {
@@ -79,7 +79,7 @@ func delete(n *node, k int) (r *node, deleted bool) {
 				s = s.r
 			}
 			r = s
-			r.l, deleted = delete(s, s.k)
+			r.l, deleted = delete(s, s.key)
 		} else if n.l != nil {
 			r = n.l
 			deleted = true
@@ -98,7 +98,7 @@ func delete(n *node, k int) (r *node, deleted bool) {
 // Find returns the value found at the given key.
 // Average: O(log(n)) Worst: O(n)
 func (t *BST) Find(k int) interface{} {
-	return find(t.r, k)
+	return find(t.root, k)
 }
 
 func find(n *node, k int) interface{} {
@@ -106,11 +106,11 @@ func find(n *node, k int) interface{} {
 		return nil
 	}
 
-	if n.k == k {
-		return n.v
-	} else if k < n.k {
+	if n.key == k {
+		return n.val
+	} else if k < n.key {
 		return find(n.l, k)
-	} else if k > n.k {
+	} else if k > n.key {
 		return find(n.r, k)
 	}
 
@@ -120,8 +120,8 @@ func find(n *node, k int) interface{} {
 // Clear removes all the nodes from the tree.
 // O(n)
 func (t *BST) Clear() {
-	t.r = clear(t.r)
-	t.c = 0
+	t.root = clear(t.root)
+	t.count = 0
 }
 
 // clear recursively removes all the nodes.
@@ -138,16 +138,16 @@ func clear(n *node) *node {
 // Traverse provides an iterator over the tree.
 // O(n)
 func (t *BST) Traverse(tt TraversalType) <-chan interface{} {
-	c := make(chan interface{}, t.c)
+	c := make(chan interface{}, t.count)
 	go func() {
 		switch tt {
 
 		case InOrder:
-			inOrder(t.r, c)
+			inOrder(t.root, c)
 		case PreOrder:
-			preOrder(t.r, c)
+			preOrder(t.root, c)
 		case PostOrder:
-			postOrder(t.r, c)
+			postOrder(t.root, c)
 		}
 		close(c)
 	}()
@@ -162,7 +162,7 @@ func inOrder(n *node, c chan interface{}) {
 	}
 
 	inOrder(n.l, c)
-	c <- n.v
+	c <- n.val
 	inOrder(n.r, c)
 }
 
@@ -172,7 +172,7 @@ func preOrder(n *node, c chan interface{}) {
 		return
 	}
 
-	c <- n.v
+	c <- n.val
 	preOrder(n.l, c)
 	preOrder(n.r, c)
 }
@@ -185,5 +185,5 @@ func postOrder(n *node, c chan interface{}) {
 
 	postOrder(n.l, c)
 	postOrder(n.r, c)
-	c <- n.v
+	c <- n.val
 }

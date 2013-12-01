@@ -106,8 +106,8 @@ func TestDelete(t *testing.T) {
 }
 
 func (t *TST) String() (s string) {
-	s = fmt.Sprintf("%v\n", t.w)
-	print(t.r, "", "root: ", &s)
+	s = fmt.Sprintf("%v\n", t.words)
+	print(t.root, "", "root: ", &s)
 	return
 }
 
@@ -116,7 +116,7 @@ func print(n *node, space, pos string, s *string) {
 		return
 	}
 
-	*s += fmt.Sprintf("%v%q %t (%p)\n", space+pos, n.c, n.e, &n)
+	*s += fmt.Sprintf("%v%q %t (%p)\n", space+pos, n.char, n.end, &n)
 
 	space += " "
 	print(n.lo, space, "lo: ", s)
