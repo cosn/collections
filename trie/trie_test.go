@@ -73,7 +73,7 @@ func TestLenClear(t *testing.T) {
 
 func TestDelete(t *testing.T) {
 	values := []string{"hey", "hello", "hell", "magazine", "magnificent", "magazines"}
-	expected := []string{"hey", "hello", "hell", "magazine", "magnificent"}
+	expected := []string{"hey", "hello", "magazine", "magnificent"}
 
 	trie := new(Trie)
 	trie.Init(256)
@@ -81,8 +81,6 @@ func TestDelete(t *testing.T) {
 	for _, s := range values {
 		trie.Insert(s)
 	}
-
-	words := trie.w
 
 	if !trie.Delete("magazines") {
 		t.Error("Value should have been removed")
@@ -92,8 +90,16 @@ func TestDelete(t *testing.T) {
 		t.Error("Word should have been removed, but is still in trie")
 	}
 
-	if l := trie.Len(); l != words-1 {
-		t.Errorf("Number of words should be %v, but instead was %v", words-1, l)
+	if !trie.Delete("hell") {
+		t.Error("Value should have been removed")
+	}
+
+	if trie.Has("hell") {
+		t.Error("Word should have been removed, but is still in trie")
+	}
+
+	if l := trie.Len(); l != len(expected) {
+		t.Errorf("Number of words should be %v, but instead was %v", len(expected), l)
 	}
 
 	for _, s := range expected {
