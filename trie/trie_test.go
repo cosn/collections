@@ -82,12 +82,18 @@ func TestDelete(t *testing.T) {
 		trie.Insert(s)
 	}
 
+	words := trie.w
+
 	if !trie.Delete("magazines") {
 		t.Error("Value should have been removed")
 	}
 
 	if trie.Has("magazines") {
 		t.Error("Word should have been removed, but is still in trie")
+	}
+
+	if l := trie.Len(); l != words-1 {
+		t.Errorf("Number of words should be %v, but instead was %v", words-1, l)
 	}
 
 	for _, s := range expected {

@@ -92,6 +92,7 @@ func (t *Trie) Delete(s string) bool {
 		}
 	}
 
+	t.w--
 	return true
 }
 
