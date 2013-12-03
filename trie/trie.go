@@ -29,7 +29,7 @@ func (t *Trie) Init(size rune) {
 }
 
 // Insert adds a new word to the trie.
-// O(len(s))
+// Average: O(log(n)) Worst: O(n)
 func (t *Trie) Insert(s string) {
 	r := t.root
 
@@ -58,7 +58,7 @@ func (t *Trie) Insert(s string) {
 }
 
 // Delete returns true if the given word was removed from the trie.
-// O(len(s))
+// Average: O(log(n)) Worst: O(n)
 func (t *Trie) Delete(s string) bool {
 	n := traverse(t.start(s), s, t.size)
 
@@ -94,7 +94,7 @@ func (t *Trie) Delete(s string) bool {
 }
 
 // Has returns true if the trie contains the given word.
-// O(len(s))
+// Average: O(log(n)) Worst: O(n)
 func (t *Trie) Has(s string) bool {
 	n := traverse(t.start(s), s, t.size)
 
@@ -103,7 +103,7 @@ func (t *Trie) Has(s string) bool {
 
 // StartsWith returns all words in the trie that begin with
 // the given string.
-// O(N)
+// O(n)
 func (t *Trie) StartsWith(s string) (matches []string) {
 	n := traverse(t.start(s), s, t.size)
 

@@ -15,7 +15,7 @@ type node struct {
 }
 
 // Inserts adds a new word to the tree.
-// O(len(s))
+// Average: O(log(n)) Worst: O(n)
 func (t *TST) Insert(s string) {
 	t.root = insert(t.root, nil, s, t)
 }
@@ -52,7 +52,7 @@ func insert(n, p *node, s string, t *TST) *node {
 }
 
 // Delete returns true if the word was removed from the tree.
-// O(len(s))
+// Average: O(log(n)) Worst: O(n)
 func (t *TST) Delete(s string) bool {
 	f, n := traverse(t.root, s)
 
@@ -95,7 +95,7 @@ func (t *TST) Delete(s string) bool {
 }
 
 // Has returns true if the tree contains the given word.
-// O(len(s))
+// Average: O(log(n)) Worst: O(n)
 func (t *TST) Has(s string) bool {
 	f, _ := traverse(t.root, s)
 
@@ -104,7 +104,7 @@ func (t *TST) Has(s string) bool {
 
 // StartsWith returns all the words in the trie that begin with
 // the given string.
-// O(N)
+// O(n)
 func (t *TST) StartsWith(s string) (matches []string) {
 	f, n := traverse(t.root, s)
 	if f {
