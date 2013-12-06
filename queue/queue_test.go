@@ -2,7 +2,7 @@ package queue
 
 import "testing"
 
-const iterations = 1000
+const iterations = 1024
 
 func TestPushPop(t *testing.T) {
 	q := new(Queue)
@@ -53,5 +53,29 @@ func TestIsEmpty(t *testing.T) {
 func testPop(t *testing.T, q *Queue, e interface{}) {
 	if v := q.Pop(); v != e {
 		t.Errorf("Popping expected %v, got %v", e, v)
+	}
+}
+
+func BenchmarkPush(b *testing.B) {
+	q := new(Queue)
+	q.Init()
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		q.Push(i)
+	}
+}
+
+func BenchmarkPop(b *testing.B) {
+	q := new(Queue)
+	q.Init()
+
+	for i := 0; i < b.N; i++ {
+		q.Push(i)
+	}
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		q.Pop()
 	}
 }

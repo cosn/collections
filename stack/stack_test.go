@@ -78,3 +78,37 @@ func testPeek(t *testing.T, s *Stack, e interface{}) {
 		t.Errorf("Peeking expected %v, got %v", e, v)
 	}
 }
+
+func BenchmarkPushNoResize(b *testing.B) {
+	s := new(Stack)
+	s.Init(b.N)
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		s.Push(i)
+	}
+}
+
+func BenchmarkPushResize(b *testing.B) {
+	s := new(Stack)
+	s.Init(b.N / 2)
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		s.Push(i)
+	}
+}
+
+func BenchmarkPop(b *testing.B) {
+	s := new(Stack)
+	s.Init(b.N)
+
+	for i := 0; i < b.N; i++ {
+		s.Push(i)
+	}
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		s.Pop()
+	}
+}

@@ -11,6 +11,12 @@ type Stack struct {
 // A stack must be initialized before it can be used.
 // O(1)
 func (s *Stack) Init(size int) {
+	// the stack needs to have at least capacity for 1 element
+	// defaulting here instead of panicing to allow for benchmarking
+	if size == 0 {
+		size = 1
+	}
+
 	s.storage = make([]interface{}, size)
 	s.i = -1
 }
