@@ -2,6 +2,7 @@ package bst
 
 import (
 	"fmt"
+	"math/rand"
 	"testing"
 )
 
@@ -155,4 +156,35 @@ func print(n *node, s *string) {
 	*s += fmt.Sprintf("%p %v\n", n, n)
 	print(n.l, s)
 	print(n.r, s)
+}
+
+func BenchmarkInsert(b *testing.B) {
+	bst := new(BST)
+	for _, i := range rand.Perm(b.N) {
+		bst.Insert(i, i)
+	}
+}
+
+func BenchmarkDelete(b *testing.B) {
+	bst := new(BST)
+	for _, i := range rand.Perm(b.N) {
+		bst.Insert(i, i)
+	}
+
+	b.ResetTimer()
+	for _, i := range rand.Perm(b.N) {
+		bst.Delete(i)
+	}
+}
+
+func BenchmarkFind(b *testing.B) {
+	bst := new(BST)
+	for _, i := range rand.Perm(b.N) {
+		bst.Insert(i, i)
+	}
+
+	b.ResetTimer()
+	for _, i := range rand.Perm(b.N) {
+		bst.Find(i)
+	}
 }
