@@ -26,7 +26,7 @@ go test github.com/cosn/collections...
 - [Queue](http://en.wikipedia.org/wiki/Queue)
 - [Radix Tree](http://en.wikipedia.org/wiki/Radix_tree) (TODO)
 - [Red-Black Tree](http://en.wikipedia.org/wiki/Red_black_tree) (TODO)
-- [Set](http://en.wikipedia.org/wiki/Set_(computer_science))
+- [Set](http://en.wikipedia.org/wiki/Set_(computer_science)
 - [Splay Tree](http://en.wikipedia.org/wiki/Splay_tree) (TODO)
 - [Stack](http://en.wikipedia.org/wiki/Stack)
 - [Ternary Search Tree](http://en.wikipedia.org/wiki/Ternary_search_tree)
