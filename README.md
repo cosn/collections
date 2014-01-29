@@ -12,7 +12,7 @@ Even though these data structures have been built for my own learning purposes, 
 
 ### Build
 
-go get github.com/cosn/collections
+go get github.com/cosn/collections...
 
 ### Test
 
