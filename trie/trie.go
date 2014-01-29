@@ -14,6 +14,7 @@ type node struct {
 	nodes  map[rune]*node
 	end    bool
 	parent *node
+	value  interface{}
 }
 
 // Init initializes a trie with a given alphabet size.
@@ -29,15 +30,16 @@ func (t *Trie) Init(size rune) {
 }
 
 // Insert adds a new word to the trie.
+// The word may be accompanied by a value.
 // Average: O(log(n)) Worst: O(n)
-func (t *Trie) Insert(s string) {
+func (t *Trie) Insert(s string, v interface{}) {
 	r := t.root
 
 	for i, c := range s {
 		n := r.next(c, t.size)
 		end := i == len(s)-1
 		if n == nil {
-			n = &node{c, make(map[rune]*node, t.size), end, r}
+			n = &node{c, make(map[rune]*node, t.size), end, r, v}
 			r.nodes[c%t.size] = n
 			// increment the number of children for the parent
 			// this information is useful for deletions
@@ -49,6 +51,7 @@ func (t *Trie) Insert(s string) {
 			// we need to now mark it as such (i.e. insert("foobar"), insert("foo"))
 			// also increment the number of words in the trie in this scenario
 			n.end = true
+			n.value = v
 			t.words++
 		}
 
@@ -96,9 +99,21 @@ func (t *Trie) Delete(s string) bool {
 // Has returns true if the trie contains the given word.
 // Average: O(log(n)) Worst: O(n)
 func (t *Trie) Has(s string) bool {
+	_, r := t.Get(s)
+	return r
+}
+
+// Get returns the value stored with the string and
+// true if the trie contains the given word.
+// Average: O(log(n)) Worst: O(n)
+func (t *Trie) Get(s string) (interface{}, bool) {
 	n := traverse(t.start(s), s, t.size)
 
-	return n != nil && n.end
+	if n == nil || !n.end {
+		return nil, false
+	}
+
+	return n.value, true
 }
 
 // StartsWith returns all words in the trie that begin with

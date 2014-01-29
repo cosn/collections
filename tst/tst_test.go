@@ -10,7 +10,7 @@ func TestInsertHas(t *testing.T) {
 	tst := new(TST)
 
 	for _, s := range values {
-		tst.Insert(s)
+		tst.Insert(s, nil)
 	}
 
 	for _, s := range values {
@@ -24,13 +24,34 @@ func TestInsertHas(t *testing.T) {
 	}
 }
 
+func TestInsertGet(t *testing.T) {
+	values := []string{"hey", "hello", "hell", "magazine", "magnificent", "magazines"}
+	tst := new(TST)
+
+	for _, s := range values {
+		tst.Insert(s, []byte(s))
+	}
+
+	for _, s := range values {
+		v, exists := tst.Get(s)
+
+		if !exists {
+			t.Errorf("Tree expected to contain '%v', but did not", s)
+		}
+
+		if s != string(v.([]byte)) {
+			t.Errorf("Tree value expected to be %q, but was %v", []byte(s), v)
+		}
+	}
+}
+
 func TestStartsWith(t *testing.T) {
 	tst := new(TST)
 
-	tst.Insert("foo")
-	tst.Insert("foobar")
-	tst.Insert("f")
-	tst.Insert("fo")
+	tst.Insert("foo", nil)
+	tst.Insert("foobar", nil)
+	tst.Insert("f", nil)
+	tst.Insert("fo", nil)
 
 	if m := tst.StartsWith("foo"); len(m) != 2 {
 		t.Errorf("Did not find the expected two matches: %v", m)
@@ -48,15 +69,15 @@ func TestStartsWith(t *testing.T) {
 func TestLenClear(t *testing.T) {
 	tst := new(TST)
 
-	tst.Insert("hello")
-	tst.Insert("hell")
-	tst.Insert("hey")
-	tst.Insert("heck")
-	tst.Insert("blah")
-	tst.Insert("boo")
-	tst.Insert("foo")
-	tst.Insert("foobar")
-	tst.Insert("moo")
+	tst.Insert("hello", nil)
+	tst.Insert("hell", nil)
+	tst.Insert("hey", nil)
+	tst.Insert("heck", nil)
+	tst.Insert("blah", nil)
+	tst.Insert("boo", nil)
+	tst.Insert("foo", nil)
+	tst.Insert("foobar", nil)
+	tst.Insert("moo", nil)
 
 	if l := tst.Len(); l != 9 {
 		t.Errorf("Tree length expected to be 9, but instead was %v", l)
@@ -75,7 +96,7 @@ func TestDelete(t *testing.T) {
 	tst := new(TST)
 
 	for _, s := range values {
-		tst.Insert(s)
+		tst.Insert(s, nil)
 	}
 
 	if !tst.Delete("magazines") {

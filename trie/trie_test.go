@@ -11,7 +11,7 @@ func TestInsertHas(t *testing.T) {
 	trie.Init(256)
 
 	for _, s := range values {
-		trie.Insert(s)
+		trie.Insert(s, nil)
 	}
 
 	for _, s := range values {
@@ -25,14 +25,36 @@ func TestInsertHas(t *testing.T) {
 	}
 }
 
+func TestInsertGet(t *testing.T) {
+	values := []string{"hey", "hello", "hell", "magazine", "magnificent", "magazines"}
+	trie := new(Trie)
+	trie.Init(256)
+
+	for _, s := range values {
+		trie.Insert(s, []byte(s))
+	}
+
+	for _, s := range values {
+		v, exists := trie.Get(s)
+
+		if !exists {
+			t.Errorf("Trie expected to contain '%v', but did not", s)
+		}
+
+		if s != string(v.([]byte)) {
+			t.Errorf("Trie value expected to be %q, but was %v", []byte(s), v)
+		}
+	}
+}
+
 func TestStartsWith(t *testing.T) {
 	trie := new(Trie)
 	trie.Init(256)
 
-	trie.Insert("foo")
-	trie.Insert("foobar")
-	trie.Insert("f")
-	trie.Insert("fo")
+	trie.Insert("foo", nil)
+	trie.Insert("foobar", nil)
+	trie.Insert("f", nil)
+	trie.Insert("fo", nil)
 
 	if m := trie.StartsWith("foo"); len(m) != 2 {
 		t.Errorf("Did not find the expected two matches: %v", m)
@@ -51,15 +73,15 @@ func TestLenClear(t *testing.T) {
 	trie := new(Trie)
 	trie.Init(26)
 
-	trie.Insert("hello")
-	trie.Insert("hell")
-	trie.Insert("hey")
-	trie.Insert("heck")
-	trie.Insert("blah")
-	trie.Insert("boo")
-	trie.Insert("foo")
-	trie.Insert("foobar")
-	trie.Insert("moo")
+	trie.Insert("hello", nil)
+	trie.Insert("hell", nil)
+	trie.Insert("hey", nil)
+	trie.Insert("heck", nil)
+	trie.Insert("blah", nil)
+	trie.Insert("boo", nil)
+	trie.Insert("foo", nil)
+	trie.Insert("foobar", nil)
+	trie.Insert("moo", nil)
 
 	if l := trie.Len(); l != 9 {
 		t.Errorf("Trie length expected to be 9, but instead was %v", l)
@@ -79,7 +101,7 @@ func TestDelete(t *testing.T) {
 	trie.Init(256)
 
 	for _, s := range values {
-		trie.Insert(s)
+		trie.Insert(s, nil)
 	}
 
 	if !trie.Delete("magazines") {

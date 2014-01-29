@@ -12,19 +12,22 @@ type node struct {
 	lo, eq, hi, parent *node
 	char               rune
 	end                bool
+	value              interface{}
 }
 
 // Inserts adds a new word to the tree.
+// The word may be accompanied by a value.
 // Average: O(log(n)) Worst: O(n)
-func (t *TST) Insert(s string) {
-	t.root = insert(t.root, nil, s, t)
+func (t *TST) Insert(s string, v interface{}) {
+	t.root = insert(t.root, nil, s, t, v)
 }
 
 // insert recusively adds a word to the tree.
-func insert(n, p *node, s string, t *TST) *node {
+func insert(n, p *node, s string, t *TST, v interface{}) *node {
 	if len(s) == 0 {
 		if n != nil && n.parent != nil && !n.parent.end {
 			n.parent.end = true
+			n.parent.value = v
 			t.words++
 		}
 
@@ -36,16 +39,17 @@ func insert(n, p *node, s string, t *TST) *node {
 		n = &node{char: c, parent: p}
 		if len(s) == 1 {
 			n.end = true
+			n.value = v
 			t.words++
 		}
 	}
 
 	if c < n.char {
-		n.lo = insert(n.lo, n, s, t)
+		n.lo = insert(n.lo, n, s, t, v)
 	} else if c > n.char {
-		n.hi = insert(n.hi, n, s, t)
+		n.hi = insert(n.hi, n, s, t, v)
 	} else {
-		n.eq = insert(n.eq, n, s[1:len(s)], t)
+		n.eq = insert(n.eq, n, s[1:len(s)], t, v)
 	}
 
 	return n
@@ -97,9 +101,22 @@ func (t *TST) Delete(s string) bool {
 // Has returns true if the tree contains the given word.
 // Average: O(log(n)) Worst: O(n)
 func (t *TST) Has(s string) bool {
-	f, _ := traverse(t.root, s)
+	_, f := t.Get(s)
 
 	return f
+}
+
+// Get returns the value stored with the string and
+// true if the tree contains the given word.
+// Average: O(log(n)) Worst: O(n)
+func (t *TST) Get(s string) (interface{}, bool) {
+	f, n := traverse(t.root, s)
+
+	if !f {
+		return nil, false
+	}
+
+	return n.value, true
 }
 
 // StartsWith returns all the words in the trie that begin with
