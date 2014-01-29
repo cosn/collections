@@ -8,7 +8,7 @@ import (
 
 func TestInsert(t *testing.T) {
 	expected := []int{5, 3, 7, 4, 6}
-	bst := new(BST)
+	bst := new(T)
 
 	for _, i := range expected {
 		if !bst.Insert(i, i) {
@@ -37,7 +37,7 @@ func TestInsert(t *testing.T) {
 
 func TestRemove(t *testing.T) {
 	expected := []int{5, 3, 7, 4, 6}
-	bst := new(BST)
+	bst := new(T)
 
 	for _, i := range expected {
 		bst.Insert(i, i)
@@ -70,7 +70,7 @@ func TestTraverse_InOrder(t *testing.T) {
 	elements := []int{5, 3, 7, 4, 6}
 	expected := []int{3, 4, 5, 6, 7}
 
-	bst := new(BST)
+	bst := new(T)
 
 	for _, i := range elements {
 		bst.Insert(i, i)
@@ -89,7 +89,7 @@ func TestTraverse_PreOrder(t *testing.T) {
 	elements := []int{5, 3, 7, 4, 6}
 	expected := []int{5, 3, 4, 7, 6}
 
-	bst := new(BST)
+	bst := new(T)
 
 	for _, i := range elements {
 		bst.Insert(i, i)
@@ -108,7 +108,7 @@ func TestTraverse_PostOrder(t *testing.T) {
 	elements := []int{5, 3, 7, 4, 6}
 	expected := []int{4, 3, 6, 7, 5}
 
-	bst := new(BST)
+	bst := new(T)
 
 	for _, i := range elements {
 		bst.Insert(i, i)
@@ -126,7 +126,7 @@ func TestTraverse_PostOrder(t *testing.T) {
 func TestClear(t *testing.T) {
 	elements := []int{5, 3, 7, 4, 6}
 
-	bst := new(BST)
+	bst := new(T)
 
 	for _, i := range elements {
 		bst.Insert(i, i)
@@ -143,7 +143,7 @@ func TestClear(t *testing.T) {
 	}
 }
 
-func (t *BST) String() (s string) {
+func (t *T) String() (s string) {
 	print(t.root, &s)
 	return
 }
@@ -159,14 +159,14 @@ func print(n *node, s *string) {
 }
 
 func BenchmarkInsert(b *testing.B) {
-	bst := new(BST)
+	bst := new(T)
 	for _, i := range rand.Perm(b.N) {
 		bst.Insert(i, i)
 	}
 }
 
 func BenchmarkDelete(b *testing.B) {
-	bst := new(BST)
+	bst := new(T)
 	for _, i := range rand.Perm(b.N) {
 		bst.Insert(i, i)
 	}
@@ -178,7 +178,7 @@ func BenchmarkDelete(b *testing.B) {
 }
 
 func BenchmarkFind(b *testing.B) {
-	bst := new(BST)
+	bst := new(T)
 	for _, i := range rand.Perm(b.N) {
 		bst.Insert(i, i)
 	}

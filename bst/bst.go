@@ -1,8 +1,8 @@
 // Package bst implements an unbalanced binary search tree.
 package bst
 
-// BST is the internal representation of a binary search tree.
-type BST struct {
+// T is the internal representation of a binary search tree.
+type T struct {
 	root  *node
 	count int
 }
@@ -25,7 +25,7 @@ const (
 
 // Insert adds a given key+value to the tree and returns true if it was added.
 // Average: O(log(n)) Worst: O(n)
-func (t *BST) Insert(k int, v interface{}) (added bool) {
+func (t *T) Insert(k int, v interface{}) (added bool) {
 	t.root, added = insert(t.root, k, v)
 	if added {
 		t.count++
@@ -52,7 +52,7 @@ func insert(n *node, k int, v interface{}) (r *node, added bool) {
 
 // Delete removes a given key from the tree and returns true if it was removed.
 // Average: O(log(n)) Worst: O(n)
-func (t *BST) Delete(k int) (deleted bool) {
+func (t *T) Delete(k int) (deleted bool) {
 	_, deleted = delete(t.root, k)
 	if deleted {
 		t.count--
@@ -97,7 +97,7 @@ func delete(n *node, k int) (r *node, deleted bool) {
 
 // Find returns the value found at the given key.
 // Average: O(log(n)) Worst: O(n)
-func (t *BST) Find(k int) interface{} {
+func (t *T) Find(k int) interface{} {
 	return find(t.root, k)
 }
 
@@ -119,7 +119,7 @@ func find(n *node, k int) interface{} {
 
 // Clear removes all the nodes from the tree.
 // O(n)
-func (t *BST) Clear() {
+func (t *T) Clear() {
 	t.root = clear(t.root)
 	t.count = 0
 }
@@ -137,7 +137,7 @@ func clear(n *node) *node {
 
 // Traverse provides an iterator over the tree.
 // O(n)
-func (t *BST) Traverse(tt TraversalType) <-chan interface{} {
+func (t *T) Traverse(tt TraversalType) <-chan interface{} {
 	c := make(chan interface{}, t.count)
 	go func() {
 		switch tt {

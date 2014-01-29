@@ -1,8 +1,8 @@
 // Package stack implements a stack.
 package stack
 
-// Stack is the internal representation of the data structure.
-type Stack struct {
+// S is the internal representation of the data structure.
+type S struct {
 	storage []interface{}
 	i       int
 }
@@ -10,7 +10,7 @@ type Stack struct {
 // Init initializes the stack data structure.
 // A stack must be initialized before it can be used.
 // O(1)
-func (s *Stack) Init(size int) {
+func (s *S) Init(size int) {
 	// the stack needs to have at least capacity for 1 element
 	// defaulting here instead of panicing to allow for benchmarking
 	if size == 0 {
@@ -23,7 +23,7 @@ func (s *Stack) Init(size int) {
 
 // Push adds a new element to the top of the stack.
 // O(1)
-func (s *Stack) Push(v interface{}) {
+func (s *S) Push(v interface{}) {
 	// dynamically increase the size of storage as needed
 	if s.i+1 == cap(s.storage) {
 		ns := make([]interface{}, s.i*2)
@@ -37,7 +37,7 @@ func (s *Stack) Push(v interface{}) {
 
 // Pop removes the top element from the stack.
 // O(1).
-func (s *Stack) Pop() interface{} {
+func (s *S) Pop() interface{} {
 	if s.i < 0 {
 		return nil
 	}
@@ -51,7 +51,7 @@ func (s *Stack) Pop() interface{} {
 
 // Peek returns the top element from the stack without removing it.
 // O(1)
-func (s *Stack) Peek() interface{} {
+func (s *S) Peek() interface{} {
 	if s.i < 0 {
 		return nil
 	}
@@ -61,12 +61,12 @@ func (s *Stack) Peek() interface{} {
 
 // IsEmpty returns true if the stack has no elements.
 // O(1)
-func (s *Stack) IsEmpty() bool {
+func (s *S) IsEmpty() bool {
 	return s.Len() == 0
 }
 
 // Len returns the number of elements in the stack.
 // O(1)
-func (s *Stack) Len() int {
+func (s *S) Len() int {
 	return s.i + 1
 }

@@ -3,27 +3,27 @@ package queue
 
 import "container/list"
 
-// Queue is the internal representation of the data structure.
-type Queue struct {
+// Q is the internal representation of the data structure.
+type Q struct {
 	l *list.List
 }
 
 // Init initializes the queue data structure.
 // A queue must be initialized before it can be used.
 // O(1)
-func (q *Queue) Init() {
+func (q *Q) Init() {
 	q.l = list.New()
 }
 
 // Push enqueues an element to the queue.
 // O(1)
-func (q *Queue) Push(v interface{}) {
+func (q *Q) Push(v interface{}) {
 	q.l.PushFront(v)
 }
 
 // Pop dequeues an element from the queue.
 // O(1)
-func (q *Queue) Pop() interface{} {
+func (q *Q) Pop() interface{} {
 	if q.l.Len() == 0 {
 		return nil
 	}
@@ -34,12 +34,12 @@ func (q *Queue) Pop() interface{} {
 
 // Len returns the number of elements in the queue.
 // O(1)
-func (q *Queue) Len() int {
+func (q *Q) Len() int {
 	return q.l.Len()
 }
 
 // IsEmpty returns true the queue has no elements.
 // O(1)
-func (q *Queue) IsEmpty() bool {
+func (q *Q) IsEmpty() bool {
 	return q.l.Len() == 0
 }

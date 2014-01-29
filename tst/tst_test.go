@@ -7,7 +7,7 @@ import (
 
 func TestInsertHas(t *testing.T) {
 	values := []string{"hey", "hello", "hell", "magazine", "magnificent", "magazines"}
-	tst := new(TST)
+	tst := new(T)
 
 	for _, s := range values {
 		tst.Insert(s, nil)
@@ -26,7 +26,7 @@ func TestInsertHas(t *testing.T) {
 
 func TestInsertGet(t *testing.T) {
 	values := []string{"hey", "hello", "hell", "magazine", "magnificent", "magazines"}
-	tst := new(TST)
+	tst := new(T)
 
 	for _, s := range values {
 		tst.Insert(s, []byte(s))
@@ -46,7 +46,7 @@ func TestInsertGet(t *testing.T) {
 }
 
 func TestStartsWith(t *testing.T) {
-	tst := new(TST)
+	tst := new(T)
 
 	tst.Insert("foo", nil)
 	tst.Insert("foobar", nil)
@@ -67,7 +67,7 @@ func TestStartsWith(t *testing.T) {
 }
 
 func TestLenClear(t *testing.T) {
-	tst := new(TST)
+	tst := new(T)
 
 	tst.Insert("hello", nil)
 	tst.Insert("hell", nil)
@@ -93,7 +93,7 @@ func TestDelete(t *testing.T) {
 	values := []string{"hey", "hello", "hell", "magazine", "magnificent", "magazines"}
 	expected := []string{"hey", "hello", "magazine", "magnificent"}
 
-	tst := new(TST)
+	tst := new(T)
 
 	for _, s := range values {
 		tst.Insert(s, nil)
@@ -126,7 +126,7 @@ func TestDelete(t *testing.T) {
 	}
 }
 
-func (t *TST) String() (s string) {
+func (t *T) String() (s string) {
 	s = fmt.Sprintf("%v\n", t.words)
 	print(t.root, "", "root: ", &s)
 	return

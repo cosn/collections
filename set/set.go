@@ -1,26 +1,26 @@
 // Package set implements a hashset.
 package set
 
-// Set is the internal representation of the data structure.
-type Set struct {
+// S is the internal representation of the data structure.
+type S struct {
 	s map[interface{}]bool
 }
 
 // Init initializes the set data structure.
 // A set must be initialized before it can be used.
 // O(1)
-func (s *Set) Init() {
+func (s *S) Init() {
 	s.s = make(map[interface{}]bool)
 }
 
 // Union returns the union of sets s and t in a new set.
 // O(n+m)
-func (s *Set) Union(t *Set) *Set {
+func (s *S) Union(t *S) *S {
 	if t == nil {
 		return s
 	}
 
-	ns := new(Set)
+	ns := new(S)
 	ns.Init()
 
 	for e := range s.s {
@@ -37,8 +37,8 @@ func (s *Set) Union(t *Set) *Set {
 // Intersect returns the intersection of sets s and t in a new set.
 // If t is null or empty, the result is an empty set
 // O(min(n,m)
-func (s *Set) Intersect(t *Set) *Set {
-	ns := new(Set)
+func (s *S) Intersect(t *S) *S {
+	ns := new(S)
 	ns.Init()
 
 	if t == nil || t.Len() == 0 {
@@ -46,7 +46,7 @@ func (s *Set) Intersect(t *Set) *Set {
 	}
 
 	// find the smaller Set to iterate through
-	var ss, ls *Set
+	var ss, ls *S
 	if s.Len() < t.Len() {
 		ss = s
 		ls = t
@@ -66,12 +66,12 @@ func (s *Set) Intersect(t *Set) *Set {
 
 // Diff returns the difference between sets s and t in a new set.
 // O(n)
-func (s *Set) Diff(t *Set) *Set {
+func (s *S) Diff(t *S) *S {
 	if t == nil || t.Len() == 0 {
 		return s
 	}
 
-	ns := new(Set)
+	ns := new(S)
 	ns.Init()
 
 	for e := range s.s {
@@ -85,7 +85,7 @@ func (s *Set) Diff(t *Set) *Set {
 
 // SymetricDiff returns a new set with elements from one set or the other, but not both.
 // O(n+m)
-func (s *Set) SymetricDiff(t *Set) *Set {
+func (s *S) SymetricDiff(t *S) *S {
 	ns := s.Diff(t)
 	nt := t.Diff(s)
 
@@ -94,7 +94,7 @@ func (s *Set) SymetricDiff(t *Set) *Set {
 
 // IsSubset returns true if set s is a subset of set t.
 // O(n)
-func (s *Set) IsSubset(t *Set) bool {
+func (s *S) IsSubset(t *S) bool {
 	if t == nil {
 		return false
 	}
@@ -114,7 +114,7 @@ func (s *Set) IsSubset(t *Set) bool {
 
 // IsSubset returns true if set s is a proper subset of set t.
 // O(n)
-func (s *Set) IsProperSubset(t *Set) bool {
+func (s *S) IsProperSubset(t *S) bool {
 	if t == nil {
 		return false
 	}
@@ -134,7 +134,7 @@ func (s *Set) IsProperSubset(t *Set) bool {
 
 // Equal returns true if the two sets contain the same elements
 // O(n)
-func (s *Set) Equals(t *Set) bool {
+func (s *S) Equals(t *S) bool {
 	if t == nil || s.Len() != t.Len() {
 		return false
 	}
@@ -150,25 +150,25 @@ func (s *Set) Equals(t *Set) bool {
 
 // Has returns true if the set contains the given element.
 // O(1)
-func (s *Set) Has(e interface{}) bool {
+func (s *S) Has(e interface{}) bool {
 	return s.s[e]
 }
 
 // Len returns the number of elements in the set.
 // O(1)
-func (s *Set) Len() int {
+func (s *S) Len() int {
 	return len(s.s)
 }
 
 // IsEmpty returns true if the set contains any elements.
 // O(1)
-func (s *Set) IsEmpty() bool {
+func (s *S) IsEmpty() bool {
 	return s.Len() == 0
 }
 
 // Clear removes all elements from the set.
 // O(n)
-func (s *Set) Clear() {
+func (s *S) Clear() {
 	for v := range s.s {
 		delete(s.s, v)
 	}
@@ -176,7 +176,7 @@ func (s *Set) Clear() {
 
 // Iter provides an iterator over the set.
 // O(n)
-func (s *Set) Iter() <-chan interface{} {
+func (s *S) Iter() <-chan interface{} {
 	c := make(chan interface{}, s.Len())
 	go func() {
 		for e := range s.s {
@@ -190,7 +190,7 @@ func (s *Set) Iter() <-chan interface{} {
 
 // Add adds a new element to the set and returns true if the value previously existed.
 // O(1)
-func (s *Set) Add(e interface{}) (f bool) {
+func (s *S) Add(e interface{}) (f bool) {
 	if !s.s[e] {
 		s.s[e] = true
 		f = true
@@ -201,7 +201,7 @@ func (s *Set) Add(e interface{}) (f bool) {
 
 // Remove removes an element from the set and returns true if the value previously existed.
 // O(1)
-func (s *Set) Remove(e interface{}) (f bool) {
+func (s *S) Remove(e interface{}) (f bool) {
 	_, f = s.s[e]
 	delete(s.s, e)
 

@@ -5,7 +5,7 @@ import "testing"
 const iterations = 1024
 
 func TestPushPop(t *testing.T) {
-	q := new(Queue)
+	q := new(Q)
 	q.Init()
 
 	for i := 0; i < iterations; i++ {
@@ -18,7 +18,7 @@ func TestPushPop(t *testing.T) {
 }
 
 func TestLen(t *testing.T) {
-	q := new(Queue)
+	q := new(Q)
 	q.Init()
 
 	for i := 0; i < iterations; i++ {
@@ -36,7 +36,7 @@ func TestLen(t *testing.T) {
 }
 
 func TestIsEmpty(t *testing.T) {
-	q := new(Queue)
+	q := new(Q)
 	q.Init()
 
 	if q.IsEmpty() != true {
@@ -50,14 +50,14 @@ func TestIsEmpty(t *testing.T) {
 	}
 }
 
-func testPop(t *testing.T, q *Queue, e interface{}) {
+func testPop(t *testing.T, q *Q, e interface{}) {
 	if v := q.Pop(); v != e {
 		t.Errorf("Popping expected %v, got %v", e, v)
 	}
 }
 
 func BenchmarkPush(b *testing.B) {
-	q := new(Queue)
+	q := new(Q)
 	q.Init()
 
 	b.ResetTimer()
@@ -67,7 +67,7 @@ func BenchmarkPush(b *testing.B) {
 }
 
 func BenchmarkPop(b *testing.B) {
-	q := new(Queue)
+	q := new(Q)
 	q.Init()
 
 	for i := 0; i < b.N; i++ {

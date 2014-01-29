@@ -1,8 +1,8 @@
 // Package tst implements a ternary search tree.
 package tst
 
-// TST is the internal representation of a ternary search tree.
-type TST struct {
+// T is the internal representation of a ternary search tree.
+type T struct {
 	root  *node
 	words int
 }
@@ -18,12 +18,12 @@ type node struct {
 // Inserts adds a new word to the tree.
 // The word may be accompanied by a value.
 // Average: O(log(n)) Worst: O(n)
-func (t *TST) Insert(s string, v interface{}) {
+func (t *T) Insert(s string, v interface{}) {
 	t.root = insert(t.root, nil, s, t, v)
 }
 
 // insert recusively adds a word to the tree.
-func insert(n, p *node, s string, t *TST, v interface{}) *node {
+func insert(n, p *node, s string, t *T, v interface{}) *node {
 	if len(s) == 0 {
 		if n != nil && n.parent != nil && !n.parent.end {
 			n.parent.end = true
@@ -57,7 +57,7 @@ func insert(n, p *node, s string, t *TST, v interface{}) *node {
 
 // Delete returns true if the word was removed from the tree.
 // Average: O(log(n)) Worst: O(n)
-func (t *TST) Delete(s string) bool {
+func (t *T) Delete(s string) bool {
 	f, n := traverse(t.root, s)
 
 	if !f {
@@ -100,7 +100,7 @@ func (t *TST) Delete(s string) bool {
 
 // Has returns true if the tree contains the given word.
 // Average: O(log(n)) Worst: O(n)
-func (t *TST) Has(s string) bool {
+func (t *T) Has(s string) bool {
 	_, f := t.Get(s)
 
 	return f
@@ -109,7 +109,7 @@ func (t *TST) Has(s string) bool {
 // Get returns the value stored with the string and
 // true if the tree contains the given word.
 // Average: O(log(n)) Worst: O(n)
-func (t *TST) Get(s string) (interface{}, bool) {
+func (t *T) Get(s string) (interface{}, bool) {
 	f, n := traverse(t.root, s)
 
 	if !f {
@@ -122,7 +122,7 @@ func (t *TST) Get(s string) (interface{}, bool) {
 // StartsWith returns all the words in the trie that begin with
 // the given string.
 // O(n)
-func (t *TST) StartsWith(s string) (matches []string) {
+func (t *T) StartsWith(s string) (matches []string) {
 	f, n := traverse(t.root, s)
 	if f {
 		matches = append(matches, s)
@@ -172,14 +172,14 @@ func traverse(n *node, s string) (bool, *node) {
 
 // Clear removes all the elements from the tree.
 // O(1)
-func (t *TST) Clear() {
+func (t *T) Clear() {
 	t.root = nil
 	t.words = 0
 }
 
 // Len returns the number of words in the tree.
 // O(1)
-func (t *TST) Len() int {
+func (t *T) Len() int {
 	return t.words
 }
 

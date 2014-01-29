@@ -3,7 +3,7 @@ package set
 import "testing"
 
 func TestAddRemoveHasClear(t *testing.T) {
-	s := new(Set)
+	s := new(S)
 	s.Init()
 
 	testLen(t, s.Len(), 0)
@@ -54,7 +54,7 @@ func TestAddRemoveHasClear(t *testing.T) {
 }
 
 func TestUnion(t *testing.T) {
-	s1, s2 := new(Set), new(Set)
+	s1, s2 := new(S), new(S)
 	s1.Init()
 	s2.Init()
 
@@ -81,7 +81,7 @@ func TestUnion(t *testing.T) {
 }
 
 func TestIntersect(t *testing.T) {
-	s1, s2 := new(Set), new(Set)
+	s1, s2 := new(S), new(S)
 	s1.Init()
 	s2.Init()
 
@@ -109,7 +109,7 @@ func TestIntersect(t *testing.T) {
 		t.Errorf("Intersection with null set should be an empty set\n")
 	}
 
-	e := new(Set)
+	e := new(S)
 	es := s1.Intersect(e)
 	if !es.IsEmpty() {
 		t.Errorf("Intersection with empty set should be an empty set\n")
@@ -117,7 +117,7 @@ func TestIntersect(t *testing.T) {
 }
 
 func TestDiff(t *testing.T) {
-	s1, s2 := new(Set), new(Set)
+	s1, s2 := new(S), new(S)
 	s1.Init()
 	s2.Init()
 
@@ -144,7 +144,7 @@ func TestDiff(t *testing.T) {
 }
 
 func TestSymetricDiff(t *testing.T) {
-	s1, s2 := new(Set), new(Set)
+	s1, s2 := new(S), new(S)
 	s1.Init()
 	s2.Init()
 
@@ -175,7 +175,7 @@ func TestSymetricDiff(t *testing.T) {
 }
 
 func TestIsSubset(t *testing.T) {
-	s1, s2 := new(Set), new(Set)
+	s1, s2 := new(S), new(S)
 	s1.Init()
 	s2.Init()
 
@@ -197,7 +197,7 @@ func TestIsSubset(t *testing.T) {
 }
 
 func TestIsProperSubset(t *testing.T) {
-	s1, s2 := new(Set), new(Set)
+	s1, s2 := new(S), new(S)
 	s1.Init()
 	s2.Init()
 
@@ -218,7 +218,7 @@ func TestIsProperSubset(t *testing.T) {
 }
 
 func TestEquals(t *testing.T) {
-	s1, s2 := new(Set), new(Set)
+	s1, s2 := new(S), new(S)
 	s1.Init()
 	s2.Init()
 
@@ -251,7 +251,7 @@ func TestEquals(t *testing.T) {
 }
 
 func TestIter(t *testing.T) {
-	s := new(Set)
+	s := new(S)
 	s.Init()
 
 	m := make(map[interface{}]bool)

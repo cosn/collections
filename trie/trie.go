@@ -1,8 +1,8 @@
 // Package trie implements a trie.
 package trie
 
-// Trie is the internal representation of a trie.
-type Trie struct {
+// T is the internal representation of a trie.
+type T struct {
 	root  *node
 	words int
 	size  rune
@@ -20,7 +20,7 @@ type node struct {
 // Init initializes a trie with a given alphabet size.
 // A trie must be initialized before it can be used.
 // O(1)
-func (t *Trie) Init(size rune) {
+func (t *T) Init(size rune) {
 	if size < 1 {
 		panic("Trie size must be a positive number")
 	}
@@ -32,7 +32,7 @@ func (t *Trie) Init(size rune) {
 // Insert adds a new word to the trie.
 // The word may be accompanied by a value.
 // Average: O(log(n)) Worst: O(n)
-func (t *Trie) Insert(s string, v interface{}) {
+func (t *T) Insert(s string, v interface{}) {
 	r := t.root
 
 	for i, c := range s {
@@ -62,7 +62,7 @@ func (t *Trie) Insert(s string, v interface{}) {
 
 // Delete returns true if the given word was removed from the trie.
 // Average: O(log(n)) Worst: O(n)
-func (t *Trie) Delete(s string) bool {
+func (t *T) Delete(s string) bool {
 	n := traverse(t.start(s), s, t.size)
 
 	// the word doesn't exist in the trie, so nothing to remove
@@ -98,7 +98,7 @@ func (t *Trie) Delete(s string) bool {
 
 // Has returns true if the trie contains the given word.
 // Average: O(log(n)) Worst: O(n)
-func (t *Trie) Has(s string) bool {
+func (t *T) Has(s string) bool {
 	_, r := t.Get(s)
 	return r
 }
@@ -106,7 +106,7 @@ func (t *Trie) Has(s string) bool {
 // Get returns the value stored with the string and
 // true if the trie contains the given word.
 // Average: O(log(n)) Worst: O(n)
-func (t *Trie) Get(s string) (interface{}, bool) {
+func (t *T) Get(s string) (interface{}, bool) {
 	n := traverse(t.start(s), s, t.size)
 
 	if n == nil || !n.end {
@@ -119,7 +119,7 @@ func (t *Trie) Get(s string) (interface{}, bool) {
 // StartsWith returns all words in the trie that begin with
 // the given string.
 // O(n)
-func (t *Trie) StartsWith(s string) (matches []string) {
+func (t *T) StartsWith(s string) (matches []string) {
 	n := traverse(t.start(s), s, t.size)
 
 	return append(matches, match(n, s)...)
@@ -161,20 +161,20 @@ func traverse(n *node, s string, size rune) *node {
 
 // Clear removes all the elements from the trie.
 // O(1)
-func (t *Trie) Clear() {
+func (t *T) Clear() {
 	t.Init(t.size)
 	t.words = 0
 }
 
 // Len returns the number of words in the trie.
 // O(1)
-func (t *Trie) Len() int {
+func (t *T) Len() int {
 	return t.words
 }
 
 // start returns the first node under the root based on the
 // word's first character and the trie's alphabet.
-func (t *Trie) start(s string) *node {
+func (t *T) start(s string) *node {
 	return t.root.nodes[(rune(s[0]) % t.size)]
 }
 

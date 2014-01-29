@@ -5,7 +5,7 @@ import "testing"
 const iterations = 1024
 
 func TestPushPop(t *testing.T) {
-	s := new(Stack)
+	s := new(S)
 	s.Init(iterations / 2)
 
 	for i := 0; i < iterations; i++ {
@@ -18,7 +18,7 @@ func TestPushPop(t *testing.T) {
 }
 
 func TestPeek(t *testing.T) {
-	s := new(Stack)
+	s := new(S)
 	s.Init(10)
 
 	s.Push("a")
@@ -35,7 +35,7 @@ func TestPeek(t *testing.T) {
 }
 
 func TestLen(t *testing.T) {
-	s := new(Stack)
+	s := new(S)
 	s.Init(iterations / 4)
 
 	for i := 0; i < iterations; i++ {
@@ -53,7 +53,7 @@ func TestLen(t *testing.T) {
 }
 
 func TestIsEmpty(t *testing.T) {
-	s := new(Stack)
+	s := new(S)
 	s.Init(2)
 
 	if s.IsEmpty() != true {
@@ -67,20 +67,20 @@ func TestIsEmpty(t *testing.T) {
 	}
 }
 
-func testPop(t *testing.T, s *Stack, e interface{}) {
+func testPop(t *testing.T, s *S, e interface{}) {
 	if v := s.Pop(); v != e {
 		t.Errorf("Popping expected %v, got %v", e, v)
 	}
 }
 
-func testPeek(t *testing.T, s *Stack, e interface{}) {
+func testPeek(t *testing.T, s *S, e interface{}) {
 	if v := s.Peek(); v != e {
 		t.Errorf("Peeking expected %v, got %v", e, v)
 	}
 }
 
 func BenchmarkPushNoResize(b *testing.B) {
-	s := new(Stack)
+	s := new(S)
 	s.Init(b.N)
 
 	b.ResetTimer()
@@ -90,7 +90,7 @@ func BenchmarkPushNoResize(b *testing.B) {
 }
 
 func BenchmarkPushResize(b *testing.B) {
-	s := new(Stack)
+	s := new(S)
 	s.Init(b.N / 2)
 
 	b.ResetTimer()
@@ -100,7 +100,7 @@ func BenchmarkPushResize(b *testing.B) {
 }
 
 func BenchmarkPop(b *testing.B) {
-	s := new(Stack)
+	s := new(S)
 	s.Init(b.N)
 
 	for i := 0; i < b.N; i++ {
