@@ -12,7 +12,24 @@ func TestPushPop(t *testing.T) {
 		s.Push(i)
 	}
 
-	for i := iterations - 1; i <= 0; i-- {
+	for i := iterations - 1; i >= 0; i-- {
+		testPop(t, s, i)
+	}
+}
+
+func TestInitPushSmallestStack(t *testing.T) {
+	// Arrange.
+	s := new(S)
+	
+	// Act.
+	s.Init(1)
+
+	for i := 0; i < 4; i++ {
+		s.Push(i)
+	}
+
+	// Assert.
+	for i := 3; i >= 0; i-- {
 		testPop(t, s, i)
 	}
 }
