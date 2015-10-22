@@ -35,6 +35,71 @@ func TestInsert(t *testing.T) {
 	}
 }
 
+func TestRemove_SingleElement(t *testing.T) {
+	bst := new(T)
+
+	bst.Insert(5, 10)
+
+	if !bst.Delete(5) {
+		t.Errorf("Element %v should have been removed", 5)
+	}
+
+	if bst.Find(5) != nil {
+		t.Errorf("Element %v should not have been found", 5)
+	}
+}
+
+func TestRemove_RootWithSingleChild(t *testing.T) {
+	bst := new(T)
+
+	bst.Insert(5, 10)
+	bst.Insert(4, 8)
+
+	if !bst.Delete(5) {
+		t.Errorf("Element %v should have been removed", 5)
+	}
+
+	if bst.Find(5) != nil {
+		t.Errorf("Element %v should not have been found", 5)
+	}
+
+	if bst.Find(4) == nil {
+		t.Errorf("Element with key %v was not found", 4)
+	}
+
+	if bst.count != 1 {
+		t.Errorf("Expected element count %v found cound %v", 1, bst.count)
+	}
+}
+
+func TestRemove_RootWithTwoChildren(t *testing.T) {
+	bst := new(T)
+
+	bst.Insert(5, 10)
+	bst.Insert(4, 8)
+	bst.Insert(6, 12)
+
+	if !bst.Delete(5) {
+		t.Errorf("Element %v should have been removed", 5)
+	}
+
+	if bst.Find(5) != nil {
+		t.Errorf("Element %v should not have been found", 5)
+	}
+
+	if bst.Find(4) == nil {
+		t.Errorf("Element with key %v was not found", 4)
+	}
+
+	if bst.Find(6) == nil {
+		t.Errorf("Element with key %v was not found", 6)
+	}
+
+	if bst.count != 2 {
+		t.Errorf("Expected element count %v found cound %v", 1, bst.count)
+	}
+}
+
 func TestRemove(t *testing.T) {
 	expected := []int{5, 3, 7, 4, 6}
 	bst := new(T)

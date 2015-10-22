@@ -53,12 +53,18 @@ func insert(n *node, k int, v interface{}) (r *node, added bool) {
 // Delete removes a given key from the tree and returns true if it was removed.
 // Average: O(log(n)) Worst: O(n)
 func (t *T) Delete(k int) (deleted bool) {
-	_, deleted = delete(t.root, k)
+	n, deleted := delete(t.root, k)
 	if deleted {
+
+		// Handling the case of root deletion.
+		if t.root.key == k {
+			t.root = n
+		}
+
 		t.count--
 	}
 
-	return
+	return deleted
 }
 
 // delete recursively deletes a key from the tree.
@@ -78,7 +84,8 @@ func delete(n *node, k int) (r *node, deleted bool) {
 			for s.r != nil {
 				s = s.r
 			}
-			r = s
+			r.key = s.key
+			r.val = s.val
 			r.l, deleted = delete(s, s.key)
 		} else if n.l != nil {
 			r = n.l
