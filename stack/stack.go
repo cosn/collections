@@ -26,7 +26,7 @@ func (s *S) Init(size int) {
 func (s *S) Push(v interface{}) {
 	// dynamically increase the size of storage as needed
 	if s.i+1 == cap(s.storage) {
-		ns := make([]interface{}, s.i*2)
+		ns := make([]interface{}, cap(s.storage)*2)
 		copy(ns, s.storage)
 		s.storage = ns
 	}
