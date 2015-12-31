@@ -55,7 +55,6 @@ func insert(n *node, k int, v interface{}) (r *node, added bool) {
 func (t *T) Delete(k int) (deleted bool) {
 	n, deleted := delete(t.root, k)
 	if deleted {
-
 		// Handling the case of root deletion.
 		if t.root.key == k {
 			t.root = n
